@@ -282,6 +282,56 @@ select:focus, input:focus {
   align-items: center;
   flex-wrap: wrap;
 }
+
+/* APP TOP BAR */
+.app-topbar {
+  position: relative;
+  z-index: 5000;
+  min-height: 52px;
+  margin-bottom: 14px;
+  padding: 8px 10px 8px 8px;
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  background: var(--surface);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: var(--shadow-main);
+}
+.app-topbar .brand-group { flex: 1; min-width: 0; }
+.app-topbar .brand-gem { width: 36px; height: 36px; border-radius: 11px; }
+.app-topbar .brand-title { font-size: 16px; letter-spacing: -.3px; }
+.app-topbar .brand-sub { font-size: 9px; text-transform: uppercase; letter-spacing: .7px; }
+.app-top-actions { display:flex; align-items:center; gap:7px; position:relative; z-index:5001; }
+.sync-status {
+  height:32px; border:1px solid var(--glass-border); background:var(--surface-card);
+  color:var(--muted); border-radius:999px; padding:0 10px; display:inline-flex;
+  align-items:center; gap:6px; font-size:10px; font-weight:700;
+}
+.sync-status:hover { background:var(--surface-hover); color:var(--text); }
+.sync-dot { width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px var(--green-glow); }
+.sync-status.syncing .sync-dot { background:var(--orange); box-shadow:0 0 0 3px var(--red-glow); animation:syncPulse 1s infinite; }
+.sync-status.error .sync-dot { background:var(--red); box-shadow:0 0 0 3px var(--red-glow); }
+@keyframes syncPulse { 50% { opacity:.35; transform:scale(.75); } }
+.app-more-button {
+  width:32px; height:32px; border-radius:50%; border:1px solid var(--glass-border);
+  background:var(--surface-card); color:var(--text); font-size:15px; line-height:1;
+  letter-spacing:1px; display:grid; place-items:center;
+}
+.app-more-button:hover { background:var(--surface-hover); }
+.app-menu {
+  position:absolute; right:0; top:42px; width:235px; padding:7px; border:1px solid var(--glass-border);
+  border-radius:16px; background:var(--surface-hover); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px);
+  box-shadow:0 18px 50px rgba(0,0,0,.28); z-index:5002; opacity:0; visibility:hidden;
+  transform:translateY(-5px) scale(.98); transition:.16s ease; transform-origin:top right;
+}
+.app-menu.open { opacity:1; visibility:visible; transform:none; }
+.app-menu button { width:100%; border:0; background:transparent; color:var(--text); padding:9px 10px;
+  border-radius:10px; display:flex; align-items:center; gap:9px; text-align:left; font-size:11px; font-weight:650; }
+.app-menu button:hover { background:var(--segmented-active); }
+.app-menu button span:first-child { width:18px; text-align:center; }
+.app-menu-divider { height:1px; background:var(--glass-border); margin:5px 4px; }
+.app-menu-meta { display:flex; justify-content:space-between; gap:10px; padding:5px 10px; font-size:9px; color:var(--muted); }
+.app-menu-meta b { color:var(--text); font-weight:650; }
 .status-pill {
   background: var(--surface-card);
   border: 1px solid var(--glass-border);
@@ -357,6 +407,8 @@ html[data-theme="light"] .theme-switch-slider {
 .upload-btn-wrap input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 
 .hub-wrapper {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -669,6 +721,38 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
 .empty-hero-title { font-size: 19px; font-weight: 750; margin-bottom: 6px; }
 .empty-hero-sub { font-size: 12px; color: var(--muted); max-width: 520px; margin: 0 auto 20px; line-height: 1.5; }
 
+/* PULL TO REFRESH — móvil */
+.pull-refresh-indicator {
+  position: fixed;
+  z-index: 10000000;
+  top: max(8px, env(safe-area-inset-top, 8px));
+  left: 50%;
+  transform: translate(-50%, -72px) scale(.92);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: var(--capsule-bg);
+  border: 1px solid var(--capsule-border);
+  color: var(--text);
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  font-size: 10px;
+  font-weight: 700;
+  pointer-events: none;
+  transition: transform .18s cubic-bezier(.16,1,.3,1), opacity .18s ease;
+  white-space: nowrap;
+}
+.pull-refresh-indicator.visible { opacity: 1; }
+.pull-refresh-indicator.ready { transform: translate(-50%, 0) scale(1); }
+.pull-refresh-indicator.refreshing { transform: translate(-50%, 0) scale(1); }
+.pull-refresh-spinner { font-size: 17px; line-height: 1; display: inline-block; }
+.pull-refresh-indicator.refreshing .pull-refresh-spinner { animation: pullSpin .7s linear infinite; }
+@keyframes pullSpin { to { transform: rotate(360deg); } }
+
 .toast-notice {
   position: fixed; top: 24px; right: 24px; background: var(--surface-hover);
   border: 1px solid var(--glass-border); color: var(--text); padding: 12px 18px;
@@ -684,6 +768,7 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
   .record-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
+  html, body { overscroll-behavior-y: contain; }
   .split-grid { grid-template-columns: 1fr !important; }
   .app-container {
     /* Ajuste para pegarse justamente debajo de la barra de estado/notch pero CON un colchón de 16px extra */
@@ -698,19 +783,20 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
   .nav-wrapper { display: none; }
   .mobile-capsule-wrap { display: flex; }
   
-  .apple-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-    margin-bottom: 10px;
-    width: 100%;
-    max-width: 100%;
+  .apple-header.app-topbar {
+    flex-direction: row; align-items:center; gap:8px; padding:6px 7px;
+    margin-bottom:9px; border-radius:15px; min-height:48px;
   }
-  .brand-group {
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-  }
+  .app-topbar .brand-group { width:auto; }
+  .app-topbar .brand-copy { display:block; }
+  .app-topbar .brand-gem { width:32px; height:32px; padding:6px !important; }
+  .app-topbar .brand-title { font-size:15px; }
+  .app-topbar .brand-sub { font-size:8px; }
+  .app-top-actions { gap:5px; }
+  .sync-status { height:29px; padding:0 8px; font-size:9px; }
+  .sync-status #syncStatusLabel { max-width:64px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .app-more-button { width:29px; height:29px; font-size:13px; }
+  .app-menu { top:38px; right:-1px; width:220px; }
   .brand-gem { width: 34px; height: 34px; font-size: 17px; border-radius: 10px; }
   .brand-title { font-size: 17px; letter-spacing: -0.3px; }
   .brand-sub { font-size: 9.5px; margin-top: 0; }
@@ -733,6 +819,8 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  #statCacheStatus, #refreshDriveBtn { display: none !important; }
+
   #statDriveStatus {
     display: flex;
     white-space: nowrap;
@@ -830,53 +918,52 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
 </style>
 </head>
 <body>
+<div class="pull-refresh-indicator" id="pullRefreshIndicator" aria-hidden="true">
+  <span class="pull-refresh-spinner" id="pullRefreshSpinner">↻</span>
+  <span id="pullRefreshText">Desliza para actualizar</span>
+</div>
 <div class="app-container">
-  <header class="apple-header">
+  <header class="apple-header app-topbar">
     <div class="brand-group">
-      <div style="display:flex;align-items:center;gap:12px">
+      <div style="display:flex;align-items:center;gap:11px;min-width:0">
         <div class="brand-gem" style="display:grid;place-items:center;padding:7px">
           <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="14" y="55" width="16" height="32" rx="6" fill="rgba(41, 151, 255, 0.45)"/>
-            <rect x="42" y="38" width="16" height="49" rx="6" fill="rgba(41, 151, 255, 0.55)"/>
-            <rect x="70" y="20" width="16" height="67" rx="6" fill="rgba(41, 151, 255, 0.65)"/>
-            <path d="M12 66 C28 62, 40 46, 52 42 C64 38, 72 24, 86 18" stroke="url(#brandGrad)" stroke-width="7" stroke-linecap="round"/>
+            <rect x="14" y="55" width="16" height="32" rx="6" fill="rgba(41,151,255,.45)"/>
+            <rect x="42" y="38" width="16" height="49" rx="6" fill="rgba(41,151,255,.55)"/>
+            <rect x="70" y="20" width="16" height="67" rx="6" fill="rgba(41,151,255,.65)"/>
+            <path d="M12 66 C28 62,40 46,52 42 C64 38,72 24,86 18" stroke="url(#brandGrad)" stroke-width="7" stroke-linecap="round"/>
             <circle cx="86" cy="18" r="5" fill="#30d158"/>
-            <defs>
-              <linearGradient id="brandGrad" x1="12" y1="66" x2="86" y2="18" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#2997ff"/>
-                <stop offset="0.6" stop-color="#00c7be"/>
-                <stop offset="1" stop-color="#30d158"/>
-              </linearGradient>
-            </defs>
+            <defs><linearGradient id="brandGrad" x1="12" y1="66" x2="86" y2="18" gradientUnits="userSpaceOnUse"><stop stop-color="#2997ff"/><stop offset=".6" stop-color="#00c7be"/><stop offset="1" stop-color="#30d158"/></linearGradient></defs>
           </svg>
         </div>
-        <div>
-          <div class="brand-title">AirTM Pro Analytics</div>
-          <div class="brand-sub">Executive Edition · Full Fidelity P2P Financial Engine</div>
+        <div class="brand-copy">
+          <div class="brand-title">AirTM Pro</div>
+          <div class="brand-sub">Analytics</div>
         </div>
-      </div>
-      <!-- SWITCH MODO CLARO / OSCURO ESTILO IOS -->
-      <div class="theme-switch-wrap" id="themeSwitch" title="Cambiar Tema (Claro / Oscuro)">
-        <div class="theme-switch-icons">
-          <span>🌙</span>
-          <span>☀️</span>
-        </div>
-        <div class="theme-switch-slider"></div>
       </div>
     </div>
-    <div class="header-actions">
-      <div class="status-pill">Estado: <b id="statOpsCount">Sin archivo cargado</b></div>
-      <div class="status-pill" id="statDriveStatus">Nube: <b id="statDriveText">Drive 🟢</b></div>
-      <div class="status-pill" id="statLastMove" title="Click para alternar UTC / Local" style="cursor:pointer">Último movimiento (UTC): <b>—</b></div>
 
-      <button class="apple-btn apple-btn-sync" id="refreshDriveBtn" title="Comprobar y sincronizar el archivo más reciente de tu Google Drive">
-        <span id="syncIcon">🔄</span> <span id="syncText">Sincronizar Drive</span>
+    <div class="app-top-actions">
+      <button class="sync-status" id="syncStatusButton" title="Actualizar datos">
+        <span class="sync-dot" id="syncDot"></span>
+        <span id="syncStatusLabel">Listo</span>
       </button>
-
-      <label class="apple-btn upload-btn-wrap" title="Opcional: Cargar archivo local manualmente">
-        <span>📥 Local</span>
-        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt">
-      </label>
+      <div class="theme-switch-wrap" id="themeSwitch" title="Cambiar tema">
+        <div class="theme-switch-icons"><span>🌙</span><span>☀️</span></div>
+        <div class="theme-switch-slider"></div>
+      </div>
+      <button class="app-more-button" id="appMoreButton" aria-label="Más opciones" title="Más opciones">•••</button>
+      <div class="app-menu" id="appMenu">
+        <button type="button" id="menuSyncAction"><span>↻</span><span>Actualizar datos</span></button>
+        <button type="button" id="menuLocalAction"><span>📥</span><span>Cargar archivo local</span></button>
+        <button type="button" id="menuTimezoneAction"><span>🕐</span><span id="menuTimezoneText">Hora: UTC</span></button>
+        <div class="app-menu-divider"></div>
+        <div class="app-menu-meta"><span>Operaciones</span><b id="statOpsCount">—</b></div>
+        <div class="app-menu-meta"><span>Último movimiento</span><b id="statLastMoveValue">—</b></div>
+        <div class="app-menu-meta"><span>Datos locales</span><b id="statCacheText">—</b></div>
+      </div>
+      <button class="apple-btn apple-btn-sync" id="refreshDriveBtn" style="display:none" aria-hidden="true"><span id="syncIcon">🔄</span><span id="syncText">Actualizar</span></button>
+      <label class="upload-btn-wrap" style="display:none"><input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt"></label>
     </div>
   </header>
 
@@ -1052,6 +1139,13 @@ const MESES_CORTOS = ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago"
 let rawRecords = [];
 let processedOps = [];
 let charts = {};
+let metricIndex = { completed: [], attempts: [], rate: null, byMonth: new Map(), byQuarter: new Map(), byYear: new Map(), byDay: new Map() };
+let dataVersion = 0;
+let metricCache = new Map();
+let syncInProgress = false;
+const DATA_CACHE_KEY = "airtm_dashboard_data_v3";
+const DATA_CACHE_VERSION = 3;
+
 let currentGranularity = "Mensual";
 let currentTab = "general";
 let mainChartCurrency = "USDC";
@@ -1210,89 +1304,231 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
   }
 }
 
-async function performDriveSync() {
-  const syncBtn = $("#refreshDriveBtn");
+function setSyncUI(state, detail = "") {
   const syncIcon = $("#syncIcon");
   const syncText = $("#syncText");
   const driveText = $("#statDriveText");
+  const cacheText = $("#statCacheText");
+  const status = $("#syncStatusButton");
+  const label = $("#syncStatusLabel");
+  const dot = $("#syncDot");
+  const pull = $("#pullRefreshIndicator");
+  const pullText = $("#pullRefreshText");
+  if (status) status.classList.remove("syncing", "error");
+  if (state === "syncing" || state === "processing") {
+    if (status) status.classList.add("syncing");
+    if (label) label.textContent = state === "processing" ? "Procesando…" : "Actualizando…";
+    if (driveText) driveText.textContent = state === "processing" ? "Procesando" : "Actualizando";
+    if (syncIcon) syncIcon.textContent = "⏳";
+    if (syncText) syncText.textContent = "Actualizando";
+    if (pull) pull.classList.add("refreshing");
+    if (pullText) pullText.textContent = state === "processing" ? "Procesando datos…" : "Actualizando datos…";
+  } else if (state === "done") {
+    if (label) label.textContent = "Actualizado";
+    if (driveText) driveText.textContent = "Actualizado";
+    if (syncIcon) syncIcon.textContent = "✓";
+    if (syncText) syncText.textContent = "Actualizar";
+    if (cacheText) updateCacheStatus();
+  } else if (state === "error") {
+    if (status) status.classList.add("error");
+    if (label) label.textContent = "Sin conexión";
+    if (driveText) driveText.textContent = "Sin conexión";
+    if (syncIcon) syncIcon.textContent = "↻";
+    if (syncText) syncText.textContent = "Reintentar";
+  }
+}
 
-  if (syncIcon) syncIcon.textContent = "⏳";
-  if (syncText) syncText.textContent = "Conectando...";
-  if (driveText) driveText.textContent = "Sincronizando ⏳";
-  toast("Consultando tu script de Drive...");
+function updateCacheStatus(timestamp = null, label = null) {
+  const el = $("#statCacheText");
+  if (!el) return;
+  if (label) { el.textContent = label; return; }
+  if (!timestamp) { el.textContent = "Sin caché"; return; }
+  const d = new Date(timestamp);
+  if (Number.isNaN(d.getTime())) { el.textContent = "Disponible"; return; }
+  el.textContent = `hace ${formatRelativeTime(d)}`;
+}
+
+function formatRelativeTime(date) {
+  const sec = Math.max(0, Math.floor((Date.now() - date.getTime()) / 1000));
+  if (sec < 60) return `${sec}s`;
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `${min} min`;
+  const h = Math.floor(min / 60);
+  if (h < 24) return `${h} h`;
+  return `${Math.floor(h / 24)} d`;
+}
+
+function serializeProcessedForCache() {
+  return processedOps.map(op => ({
+    ...op,
+    _created: op._created instanceof Date ? op._created.toISOString() : op._created,
+    _updated: op._updated instanceof Date ? op._updated.toISOString() : op._updated
+  }));
+}
+
+function saveDashboardCache(source = "Drive") {
+  if (!processedOps.length) return;
+  try {
+    const payload = {
+      version: DATA_CACHE_VERSION,
+      savedAt: Date.now(),
+      source,
+      rows: serializeProcessedForCache()
+    };
+    const json = JSON.stringify(payload);
+    localStorage.setItem(DATA_CACHE_KEY, json);
+    updateCacheStatus(payload.savedAt);
+  } catch (err) {
+    console.warn("No se pudo guardar la caché local:", err);
+    updateCacheStatus(null, "No disponible");
+  }
+}
+
+function restoreDashboardCache() {
+  try {
+    const raw = localStorage.getItem(DATA_CACHE_KEY);
+    if (!raw) return false;
+    const payload = JSON.parse(raw);
+    if (!payload || payload.version !== DATA_CACHE_VERSION || !Array.isArray(payload.rows) || !payload.rows.length) return false;
+
+    const rows = payload.rows.map(op => ({
+      ...op,
+      _created: new Date(op._created),
+      _updated: new Date(op._updated)
+    })).filter(op => !Number.isNaN(op._created.getTime()));
+
+    if (!rows.length) return false;
+    loadParsedObjects(rows, { saveCache: false, fromCache: true });
+    updateCacheStatus(payload.savedAt);
+    const driveText = $("#statDriveText");
+    if (driveText) driveText.textContent = `Caché · ${formatRelativeTime(new Date(payload.savedAt))}`;
+    return true;
+  } catch (err) {
+    console.warn("Caché local inválida:", err);
+    try { localStorage.removeItem(DATA_CACHE_KEY); } catch (_) {}
+    return false;
+  }
+}
+
+async function performDriveSync(options = {}) {
+  if (syncInProgress) return;
+  syncInProgress = true;
+  const silent = !!options.silent;
+
+  setSyncUI("syncing", "Sincronizando ⏳");
+  if (!silent) toast("Actualizando datos desde Drive…");
 
   try {
-    let res = null;
     let json = null;
+    let directInfo = "";
 
+    // Primero intentamos Apps Script directamente. Usamos texto antes de JSON
+    // para poder identificar respuestas HTML, errores HTTP o respuestas truncadas.
     try {
-      res = await fetchWithTimeout(APPS_SCRIPT_URL, { redirect: "follow" }, 12000);
-      if (res && res.ok) {
-        json = await res.json();
+      const res = await fetchWithTimeout(APPS_SCRIPT_URL, { redirect: "follow", cache: "no-store" }, 12000);
+      const raw = await res.text();
+      directInfo = `HTTP ${res.status}`;
+      if (!res.ok) {
+        throw new Error(`Apps Script respondió ${res.status}`);
+      }
+      try {
+        json = JSON.parse(raw);
+      } catch (parseErr) {
+        const preview = String(raw || "").replace(/\s+/g, " ").slice(0, 140);
+        throw new Error(`Respuesta no válida (${directInfo})${preview ? `: ${preview}` : ""}`);
       }
     } catch (directErr) {
-      console.warn("Fallo fetch directo a Apps Script, probando túnel de respaldo...", directErr);
+      console.warn("Fallo fetch directo a Apps Script, probando respaldo:", directErr);
     }
 
+    // Respaldo por AllOrigins. También validamos el contenido para no convertir
+    // un HTML de error en un mensaje genérico poco útil.
     if (!json) {
-      if (syncText) syncText.textContent = "Reintentando...";
+      setSyncUI("syncing", "Reintentando…");
       const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(APPS_SCRIPT_URL)}`;
-      const pRes = await fetchWithTimeout(proxyUrl, {}, 12000);
-      if (pRes && pRes.ok) {
-        const textData = await pRes.text();
-        try {
-          json = JSON.parse(textData);
-        } catch(e) {}
+      const pRes = await fetchWithTimeout(proxyUrl, { cache: "no-store" }, 10000);
+      const textData = await pRes.text();
+      if (!pRes.ok) throw new Error(`Respaldo HTTP ${pRes.status}`);
+      try {
+        json = JSON.parse(textData);
+      } catch (e) {
+        const preview = String(textData || "").replace(/\s+/g, " ").slice(0, 140);
+        throw new Error(`El respaldo devolvió una respuesta no válida${preview ? `: ${preview}` : ""}`);
       }
     }
 
-    if (json) {
-      if (json.error) throw new Error(json.error);
-      if (!json.data) throw new Error("El script no devolvió contenido de archivo");
-
-      if (syncText) syncText.textContent = "Procesando...";
-      const cleanBase64 = String(json.data).replace(/\s+/g, "");
-      const binaryString = atob(cleanBase64);
-      const len = binaryString.length;
-      const bytes = new Uint8Array(len);
-      for (let i = 0; i < len; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-
-      const wb = XLSX.read(bytes.buffer, { type: "array", cellDates: true });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const sheetData = XLSX.utils.sheet_to_json(ws, { defval: "" });
-      if (!sheetData || !sheetData.length) throw new Error("El archivo en Drive está vacío");
-
-      loadParsedObjects(sheetData);
-      if (driveText) driveText.textContent = "Drive 🟢";
-      toast(`✅ Sincronizado: ${json.name || "Archivo más reciente"} (${sheetData.length} filas)`);
-      return;
+    if (!json || typeof json !== "object") throw new Error("Respuesta vacía o inválida del servidor");
+    if (json.error) throw new Error(String(json.error));
+    if (!json.data || typeof json.data !== "string") {
+      throw new Error("Apps Script respondió, pero no envió el archivo (campo data ausente)");
     }
+
+    setSyncUI("processing");
+    const cleanBase64 = String(json.data).replace(/^data:[^,]+,/, "").replace(/\s+/g, "");
+    if (!cleanBase64 || cleanBase64.length < 100) throw new Error("El archivo recibido está vacío o incompleto");
+
+    let binaryString;
+    try {
+      binaryString = atob(cleanBase64);
+    } catch (e) {
+      throw new Error("El archivo recibido desde Drive no tiene un Base64 válido");
+    }
+
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) bytes[i] = binaryString.charCodeAt(i);
+
+    let wb;
+    try {
+      wb = XLSX.read(bytes.buffer, { type: "array", cellDates: false, dense: true });
+    } catch (e) {
+      throw new Error("Se recibió el archivo, pero no se pudo leer como Excel");
+    }
+
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    if (!ws) throw new Error("El Excel recibido no contiene ninguna hoja");
+    const sheetData = XLSX.utils.sheet_to_json(ws, { defval: "" });
+    if (!sheetData || !sheetData.length) throw new Error("El archivo en Drive está vacío");
+
+    loadParsedObjects(sheetData, { saveCache: true, fromCache: false });
+    setSyncUI("done");
+    if (!silent) toast(`✅ Datos actualizados · ${sheetData.length} operaciones`);
+    return true;
   } catch (scriptErr) {
-    console.error("Error en Apps Script:", scriptErr);
-    if (driveText) driveText.textContent = "Revisar ⚠️";
-    toast(`Aviso Drive: ${scriptErr.message || "No se pudo leer"}`);
+    console.error("Error en sincronización Drive:", scriptErr);
+    setSyncUI("error");
+    const message = scriptErr?.message || "No se pudo leer el archivo";
+    if (!silent) toast(`⚠️ Drive: ${message}`);
+    return false;
   } finally {
-    if (syncIcon) syncIcon.textContent = "🔄";
-    if (syncText) syncText.textContent = "Sincronizar Drive";
+    syncInProgress = false;
+    setTimeout(() => {
+      const pull = $("#pullRefreshIndicator");
+      if (pull) pull.classList.remove("refreshing", "ready", "visible");
+      if ($("#syncIcon")) $("#syncIcon").textContent = "🔄";
+      if ($("#syncText")) $("#syncText").textContent = "Sincronizar Drive";
+    }, 650);
   }
-
-  toast("No se pudo descargar automáticamente. Puedes usar '📥 Local' para cargar el archivo.");
 }
 
 $("#refreshDriveBtn").addEventListener("click", performDriveSync);
+$("#syncStatusButton")?.addEventListener("click", () => performDriveSync({ silent: false }));
+$("#menuSyncAction")?.addEventListener("click", () => { $("#appMenu")?.classList.remove("open"); performDriveSync({ silent:false }); });
+$("#menuLocalAction")?.addEventListener("click", () => { $("#appMenu")?.classList.remove("open"); $("#fileInput")?.click(); });
+$("#menuTimezoneAction")?.addEventListener("click", () => { $("#appMenu")?.classList.remove("open"); toggleTimezone(); });
+$("#appMoreButton")?.addEventListener("click", e => { e.stopPropagation(); $("#appMenu")?.classList.toggle("open"); });
+document.addEventListener("click", e => { if (!e.target.closest("#appMenu") && !e.target.closest("#appMoreButton")) $("#appMenu")?.classList.remove("open"); });
 
 $("#fileInput").onchange = async e => {
   const f = e.target.files && e.target.files[0];
   if (!f) return;
   try {
     const buf = await f.arrayBuffer();
-    const wb = XLSX.read(buf, { type: "array", cellDates: true });
+    const wb = XLSX.read(buf, { type: "array", cellDates: false, dense: true });
     const ws = wb.Sheets[wb.SheetNames[0]];
     const data = XLSX.utils.sheet_to_json(ws, { defval: "" });
     if (!data.length) throw new Error("Archivo vacío.");
-    loadParsedObjects(data);
+    loadParsedObjects(data, { saveCache: true, fromCache: false });
     const driveText = $("#statDriveText");
     if (driveText) driveText.textContent = "Local 📥";
     e.target.value = "";
@@ -1303,7 +1539,7 @@ $("#fileInput").onchange = async e => {
   }
 };
 
-function loadParsedObjects(rows) {
+function loadParsedObjects(rows, options = {}) {
   rawRecords = rows;
   const processed = [];
 
@@ -1369,31 +1605,48 @@ function loadParsedObjects(rows) {
 
   processed.sort((a,b) => b._created - a._created);
   processedOps = processed;
+  dataVersion++;
+  metricCache.clear();
+
+  const completed = processed.filter(x => x.Status === "Completada" && (x.Type === "Agregar" || x.Type === "Retirar"));
+  const attempts = processed.filter(x => x.Type === "Agregar" || x.Type === "Retirar");
+  const byMonth = new Map(), byQuarter = new Map(), byYear = new Map(), byDay = new Map();
+  const addTo = (map, key, item) => { if (!map.has(key)) map.set(key, []); map.get(key).push(item); };
+  completed.forEach(x => {
+    addTo(byMonth, x.Periodo_Key, x);
+    addTo(byQuarter, `${x.Año}-${x.Trimestre}`, x);
+    addTo(byYear, String(x.Año), x);
+    addTo(byDay, `${x.Periodo_Key}-${String(x.Dia).padStart(2,"0")}`, x);
+  });
+  metricIndex = { completed, attempts, rate: calculateContextRates(completed), byMonth, byQuarter, byYear, byDay };
 
   syncPeriodSelectors();
   renderActiveTab();
   updateHeaderPill();
+  if (options.saveCache !== false) saveDashboardCache(options.fromCache ? "Caché" : "Drive");
 }
 
 function MESES_LARGOS(m) { return MESES[m] || ""; }
 
 function updateHeaderPill() {
-  const comp = processedOps.filter(x => x.Status === "Completada" && (x.Type === "Agregar" || x.Type === "Retirar"));
-  $("#statOpsCount").textContent = `${comp.length} transacciones`;
-  if (comp.length) {
-    const last = comp[0]._created;
-    $("#statLastMove").innerHTML = `Último movimiento (${timezoneMode}): <b>${formatDisplayDate(last, true)}</b>`;
-  } else {
-    $("#statLastMove").innerHTML = `Último movimiento (${timezoneMode}): <b>—</b>`;
-  }
+  const comp = metricIndex.completed || processedOps.filter(x => x.Status === "Completada" && (x.Type === "Agregar" || x.Type === "Retirar"));
+  const ops = `${comp.length} transacciones`;
+  const opsEl = $("#statOpsCount");
+  if (opsEl) opsEl.textContent = ops;
+  const last = comp[0]?._created;
+  const lastText = last ? formatDisplayDate(last, true) : "—";
+  const lastEl = $("#statLastMoveValue");
+  if (lastEl) lastEl.textContent = `${timezoneMode} · ${lastText}`;
+  const tz = $("#menuTimezoneText");
+  if (tz) tz.textContent = `Hora: ${timezoneMode}`;
 }
 
-$("#statLastMove").onclick = () => {
+function toggleTimezone() {
   timezoneMode = timezoneMode === "UTC" ? "Local" : "UTC";
   toast(`Visualización de horas cambiada a: ${timezoneMode}`);
   updateHeaderPill();
   renderActiveTab();
-};
+}
 
 function calculateContextRates(df) {
   const eurOps = df.filter(x => x.Moneda_Op === "EUR");
@@ -1431,12 +1684,15 @@ function calculateContextRates(df) {
 }
 
 function computeMetrics(dfAll) {
-  const completed = dfAll.filter(x => x.Status === "Completada" && (x.Type === "Agregar" || x.Type === "Retirar"));
-  const attempts = dfAll.filter(x => x.Type === "Agregar" || x.Type === "Retirar");
+  const cacheKey = `${dataVersion}|${currentGranularity}|${$("#period")?.value || ""}|${$("#day")?.value || ""}|${$("#dateFrom")?.value || ""}|${$("#dateTo")?.value || ""}`;
+  if (metricCache.has(cacheKey)) return metricCache.get(cacheKey);
+
+  const completed = metricIndex.completed.length ? metricIndex.completed : dfAll.filter(x => x.Status === "Completada" && (x.Type === "Agregar" || x.Type === "Retirar"));
+  const attempts = metricIndex.attempts.length ? metricIndex.attempts : dfAll.filter(x => x.Type === "Agregar" || x.Type === "Retirar");
 
   if (!completed.length) return { empty: true, completed: [], attempts: [] };
 
-  const rate = calculateContextRates(completed);
+  const rate = metricIndex.rate || calculateContextRates(completed);
 
   let current = completed;
   const pVal = $("#period").value;
@@ -1452,14 +1708,13 @@ function computeMetrics(dfAll) {
       return t >= fromTime && t <= toTime;
     });
   } else if (currentGranularity === "Mensual" && pVal && pVal !== "all") {
-    current = completed.filter(x => x.Periodo_Key === pVal);
-    if (dVal && dVal !== "Todos") {
-      current = current.filter(x => x.Dia === parseInt(dVal, 10));
-    }
+    current = dVal && dVal !== "Todos"
+      ? (metricIndex.byDay.get(`${pVal}-${String(parseInt(dVal, 10)).padStart(2,"0")}`) || [])
+      : (metricIndex.byMonth.get(pVal) || []);
   } else if (currentGranularity === "Trimestral" && pVal && pVal !== "all") {
-    current = completed.filter(x => `${x.Año}-${x.Trimestre}` === pVal);
+    current = metricIndex.byQuarter.get(pVal) || [];
   } else if (currentGranularity === "Anual" && pVal && pVal !== "all") {
-    current = completed.filter(x => String(x.Año) === pVal);
+    current = metricIndex.byYear.get(pVal) || [];
   }
 
   const eur = current.filter(x => x.Moneda_Op === "EUR");
@@ -1556,7 +1811,7 @@ function computeMetrics(dfAll) {
   const totalVolumeMovidoEUR = eurIn + eurOut + (penIn + penOut) / (rate.pen || 3.52) * rate.eur;
   const marginOverVol = totalVolumeMovidoEUR > 0 ? (curGainEUR / totalVolumeMovidoEUR) * 100 : 0;
 
-  return {
+  const result = {
     empty: false,
     completed,
     attempts,
@@ -1587,6 +1842,8 @@ function computeMetrics(dfAll) {
     marginOverVol,
     totalDaysInMonth
   };
+  metricCache.set(cacheKey, result);
+  return result;
 }
 
 function syncPeriodSelectors() {
@@ -3933,6 +4190,7 @@ window.updateSingleFee = (k, v) => {
     });
   }
   
+  metricCache.clear();
   toast("Tarifa fija actualizada y recalculada en todo el sistema");
   if (currentTab === "tarifas") {
     renderTarifasView();
@@ -3946,6 +4204,7 @@ window.resetAllFees = () => {
   hiddenMethods = [...DEFAULT_HIDDEN];
   localStorage.removeItem("airtm_fixed_fees_v2");
   localStorage.removeItem("airtm_hidden_methods");
+  metricCache.clear();
   toast("Todas las tarifas y métodos restablecidos");
   
   if (processedOps && processedOps.length) {
@@ -4144,15 +4403,80 @@ window.printReport = function() {
   }
 };
 
+// Pull-to-refresh móvil: comportamiento tipo Chrome/Safari, sin botón permanente.
+(function initPullToRefresh() {
+  let startY = 0;
+  let pullDistance = 0;
+  let tracking = false;
+  let triggered = false;
+  const threshold = 72;
+  const maxPull = 118;
+  const indicator = () => $("#pullRefreshIndicator");
+  const label = () => $("#pullRefreshText");
+
+  document.addEventListener("touchstart", e => {
+    if (window.innerWidth > 768 || syncInProgress || window.scrollY > 2) return;
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    startY = t.clientY;
+    pullDistance = 0;
+    tracking = true;
+    triggered = false;
+  }, { passive: true });
+
+  document.addEventListener("touchmove", e => {
+    if (!tracking || syncInProgress || window.innerWidth > 768) return;
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    const dy = t.clientY - startY;
+    if (dy <= 0 || window.scrollY > 2) { tracking = false; return; }
+    pullDistance = Math.min(maxPull, dy * 0.55);
+    const el = indicator();
+    if (!el) return;
+    el.classList.add("visible");
+    el.style.transform = `translate(-50%, ${Math.max(-10, pullDistance - 48)}px) scale(${0.92 + Math.min(pullDistance / maxPull, 1) * 0.08})`;
+    if (pullDistance >= threshold) {
+      el.classList.add("ready");
+      if (label()) label().textContent = "Suelta para actualizar";
+      triggered = true;
+    } else {
+      el.classList.remove("ready");
+      if (label()) label().textContent = "Desliza para actualizar";
+    }
+    // Evita que el navegador dispare su propio pull-to-refresh mientras hacemos el gesto.
+    if (dy > 12) e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener("touchend", () => {
+    if (!tracking) return;
+    tracking = false;
+    const el = indicator();
+    if (triggered && !syncInProgress) {
+      if (el) {
+        el.classList.add("visible", "ready", "refreshing");
+        el.style.transform = "translate(-50%, 0) scale(1)";
+      }
+      performDriveSync({ silent: false });
+    } else if (el) {
+      el.classList.remove("visible", "ready");
+      el.style.transform = "";
+    }
+    pullDistance = 0;
+  }, { passive: true });
+})();
+
 window.addEventListener("DOMContentLoaded", () => {
   applyTheme(currentTheme);
   syncPeriodSelectors();
   renderActiveTab();
+  updateCacheStatus();
+  restoreDashboardCache();
   setTimeout(updateNavIndicator, 150);
 
+  // El dashboard aparece inmediatamente con la última copia válida; Drive se actualiza en segundo plano.
   setTimeout(() => {
-    performDriveSync();
-  }, 350);
+    performDriveSync({ silent: !!processedOps.length });
+  }, processedOps.length ? 250 : 350);
 });
 </script>
 </body>
