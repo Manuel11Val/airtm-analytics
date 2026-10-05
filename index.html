@@ -17,7 +17,6 @@
 <link rel="icon" type="image/png" id="favIconLink">
 <script>
 (function() {
-  /* Genera un PNG rasterizado de 180x180 px en tiempo real para Safari iOS */
   try {
     const c = document.createElement('canvas');
     c.width = 180;
@@ -687,8 +686,8 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
 @media (max-width: 768px) {
   .split-grid { grid-template-columns: 1fr !important; }
   .app-container {
-    /* Ajuste para pegarse justamente debajo de la barra de estado/notch */
-    padding-top: env(safe-area-inset-top) !important;
+    /* Ajuste para pegarse justamente debajo de la barra de estado/notch pero CON un colchón de 16px extra */
+    padding-top: calc(env(safe-area-inset-top) + 16px) !important;
     padding-left: 10px !important;
     padding-right: 10px !important;
     padding-bottom: calc(125px + env(safe-area-inset-bottom, 16px)) !important;
@@ -1029,14 +1028,24 @@ function runRouletteAnimation(el, targetText, prefix = "", suffix = "", duration
 }
 
 const DEFAULT_FEES = {
-  "Bizum||Retirar": 2.0, "Bizum||Agregar": 1.5,
+  "-||Retirar": 0.0, "-||Agregar": 0.0,
+  "Banco Portugal||Retirar": 0.7, "Banco Portugal||Agregar": 0.8,
+  "Banco de Alemania||Retirar": 0.7, "Banco de Alemania||Agregar": 0.8,
   "Banco de España||Retirar": 0.8, "Banco de España||Agregar": 0.8,
-  "SEPA||Retirar": 0.4, "SEPA||Agregar": 0.2,
+  "Bancos Perú||Retirar": 0.25, "Bancos Perú||Agregar": 0.1,
+  "Bizum||Retirar": 2.0, "Bizum||Agregar": 1.5,
+  "Cuenta de Inversiones||Retirar": 0.0, "Cuenta de Inversiones||Agregar": 0.0,
   "Interbank||Retirar": 0.25, "Interbank||Agregar": 0.1,
-  "Yape||Retirar": 1.25, "Yape||Agregar": 0.4,
+  "PayPal (saldo de tarjeta)||Retirar": 0.0, "PayPal (saldo de tarjeta)||Agregar": 0.0,
+  "Paypal (Saldo Paypal, Más de $15)||Retirar": 0.0, "Paypal (Saldo Paypal, Más de $15)||Agregar": 0.0,
+  "Revolut (EUR)||Retirar": 0.5, "Revolut (EUR)||Agregar": 0.0,
+  "SEPA||Retirar": 0.4, "SEPA||Agregar": 0.2,
   "Wise||Retirar": 0.8, "Wise||Agregar": 1.0,
-  "Banco Portugal||Retirar": 0.0, "Banco Portugal||Agregar": 0.0
+  "Yape||Retirar": 1.25, "Yape||Agregar": 0.4
 };
+
+const DEFAULT_HIDDEN = ["-", "Cuenta de Inversiones", "PayPal (saldo de tarjeta)", "Paypal (Saldo Paypal, Más de $15)"];
+
 const MESES = ["", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const MESES_CORTOS = ["", "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
 
@@ -1055,10 +1064,9 @@ let fiscalMode = "ahorro";
 let fiscalSelectedYear = null;
 let currentTheme = localStorage.getItem("airtm_theme_mode") || "dark";
 let fees = Object.assign(structuredClone(DEFAULT_FEES), JSON.parse(localStorage.getItem("airtm_fixed_fees_v2") || "{}"));
-let hiddenMethods = JSON.parse(localStorage.getItem("airtm_hidden_methods") || "[]");
+let hiddenMethods = JSON.parse(localStorage.getItem("airtm_hidden_methods") || JSON.stringify(DEFAULT_HIDDEN));
 let showHiddenFees = false;
 
-/* CARPETA DRIVE Y APPS SCRIPT OFICIAL */
 const FOLDER_ID = "16PcRZSyKysY83fTNMk_MQokC8mzQqijS";
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7d-C4ODHcZb7VhFj_rXgFr6GY9ciaV1D_lNP0qY1ZFleWfsTq_1fB5JFKeWAFYs2F/exec";
 
@@ -1151,13 +1159,23 @@ function num(val) {
 
 function canonicalMethod(m) {
   const norm = String(m || "").trim().toLowerCase();
+  if (!norm || norm === "-") return "-";
   if (norm.includes("bizum")) return "Bizum";
-  if (norm.includes("banco de españa") || norm.includes("banco españa") || norm.includes("banco de espana") || norm.includes("santander") || norm.includes("bbva")) return "Banco de España";
+  if (norm.includes("alemania")) return "Banco de Alemania";
+  if (norm.includes("españa") || norm.includes("banco españa") || norm.includes("santander") || norm.includes("bbva")) return "Banco de España";
+  if (norm.includes("portugal")) return "Banco Portugal";
+  if (norm.includes("revolut")) return "Revolut (EUR)";
   if (norm.includes("sepa")) return "SEPA";
-  if (norm.includes("interbank") || norm.includes("banco internacional del peru") || norm.includes("bancos perú") || norm.includes("bancos peru") || norm.includes("bcp") || norm.includes("soles")) return "Interbank";
   if (norm.includes("yape")) return "Yape";
   if (norm.includes("wise")) return "Wise";
-  if (norm.includes("portugal")) return "Banco Portugal";
+  
+  if (norm.includes("interbank")) return "Interbank";
+  if (norm.includes("bancos perú") || norm.includes("bancos peru") || norm.includes("bcp") || norm.includes("soles")) return "Bancos Perú";
+  
+  if (norm.includes("inversiones")) return "Cuenta de Inversiones";
+  if (norm.includes("saldo de tarjeta")) return "PayPal (saldo de tarjeta)";
+  if (norm.includes("saldo paypal") || norm.includes("paypal")) return "Paypal (Saldo Paypal, Más de $15)";
+  
   return m ? String(m).trim() : "Otros";
 }
 
@@ -3813,7 +3831,7 @@ function renderTarifasView() {
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="apple-btn ${showHiddenFees ? 'apple-btn-sync' : ''}" onclick="toggleShowHiddenFees()">
-          ${showHiddenFees ? '👁️ Ocultar deshabilitados' : `👁️️ Ver ocultos (${hiddenMethods.length})`}
+          ${showHiddenFees ? '👁️ Ocultar deshabilitados' : `👁 Ver ocultos (${hiddenMethods.length})`}
         </button>
         <button class="apple-btn apple-btn-sync" onclick="openAddMethodModal()">+ Agregar Método</button>
       </div>
@@ -3925,9 +3943,10 @@ window.updateSingleFee = (k, v) => {
 
 window.resetAllFees = () => {
   fees = structuredClone(DEFAULT_FEES);
-  hiddenMethods = [];
+  hiddenMethods = [...DEFAULT_HIDDEN];
   localStorage.removeItem("airtm_fixed_fees_v2");
   localStorage.removeItem("airtm_hidden_methods");
+  toast("Todas las tarifas y métodos restablecidos");
   
   if (processedOps && processedOps.length) {
     processedOps.forEach(op => {
@@ -3937,8 +3956,8 @@ window.resetAllFees = () => {
     });
   }
   
-  toast("Todas las tarifas fijas fueron restablecidas");
   renderTarifasView();
+  if (currentTab !== "tarifas") renderActiveTab();
 };
 
 function renderEmptyState() {
