@@ -6,17 +6,100 @@
 <title>AirTM Pro Analytics — Executive Edition</title>
 <!-- PWA Web App Meta Tags para comportamiento de App Nativa iOS y Android -->
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AirTM Pro">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07090e">
-<!-- ICONO NATIVO PNG BASE64 COMPATIBLE AL 100% CON SAFARI E IOS HOME SCREEN (ESTILO APPLE STOCKS) -->
-<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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00lOnTzF6TNnOH/uPPGJOOl0mnQqTSqV+r1Vq1UqlTKlUolSqUyhWKBQLFIsFiuVSoVyuTz7e+ffp5k7N6rV6mz/3e9UKpU/Vq3Wr1evVSmVypTLZUqlEsVisX4x7b8f9e/l/T7y/f/3p4/8bXU0NTXR3t5OR0cHfX19rF69mvePHuP9999n7dp1bNy4UStoc9Rz0K98eJS//O5PvPT4A1zVt4L2Zg8Oh/X3J8vP3z01t3r32f+P+9r5+n49+e9/9p/qXk5n7jN37b8/N1f87/35NfPve9/P333d7xeq/Xv1f3Xf53P/Wff6c1eq/bWw3W7H6/XicrnqP9z1j9vtxuFwqNVj9W39f50e9Xf53L/P7b78z81177O57nMzff+ff+e5f2+mbzB73bmf/63Xn7vrPv9rN533e4d/y+N24/d6/9e5/47j/O+5677/647/8X/P6bv2d42tXwP33ryeb9/Tz6b+Nq66fjl3bNzAhnWr6exYjM1qb+b+1vwoaHPk8kXm/k5yqQk23P4Q/77/bX757A9Y1u5l3eZt/PDnv+TxB3dgc5h7nC5oDkWz0S/7uX9pC91rbuAnv32T3778C265qp2l3X28+uE4j9+/nQZzX+wUdAOY2dZ75g3v7f/9Z8u4+gduvvLdH/L25yfYsWUtXQv62f/qhzxy/xYcxn5eUNAmoT6wz73Ove29+91n/3v21+v79t+r/y33fv76n9135r89/9l/Z+a69777zPtnrjv329/73zPnrvvv/b2Z8zNrvs/92d99n/m5P/v73G9/7/m/r3v9ub/zP/977nPnr/13X/f/3v3n/s6Z//bfnzn3799k7vP/Xff3M31/Zte/9/fnr/vvv8/93Jn/9rx3z7z/zH3vff+9z/77+/r995t7/z9zff/Z2Xfe7+/N/PZ3r9973/vce9/7b2b6/p/9d5/71/Pfv+9/3vtz/32/P/e57/z75r53/9rn3//e99/7/fef+/c/c925z/935r7/e64/9/f/zPXvff+9f/2+6879vX/3ve/73jPv//fe9/33/vf77/29/74/d93/3vc/9/ff/5/53O/P/f3Zf/f7899/7j//v7//u9/9/ff+9/vvm/v8+b/n/n7v88/+/T/z+3Pf//z77/v7733//efv//7cv3/+7/1vnf/135/7/u+/9//ef9//+/e/99vf/77vv/ff/3v//d//e9//v+f+ve/77z/z+/977vP/PXfd99/3f/33//f//v//v+/7//fv/9/f/33//f//f/7/v//f//v/7//f9/77/3//+//v/7//f9//vf/+//v/9/33/vf//v97//3f/9/fv/7//fv//9//33//f//v/9/3v//b3///f//fv/f/9//3//+//3//f//v/9/33///7v/+//7//f//f///f/9///9//v/9/9/3//vf//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v/9///9///3//7//f//7//f//7///b/9///3/+//7//9//v//9///9//v//wD/1P/fAAlD+gAAAK96VFh0UmF3IHByb2ZpbGUgdHlwZSBpcHRjAAB4nOPy8xN18nH1cg5x8XEMcQ1x9XENcg2JDQ4Njg0OMnH1cvVx9XENcQ1x9XENcQ1x9XEN8fF1CQEAi/0S8gAAAABJRU5ErkJggg==">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0d14'/%3E%3Cpath d='M20 70 C35 68, 45 48, 55 45 C65 42, 70 28, 80 24' fill='none' stroke='%232997ff' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='80' cy='24' r='4' fill='%2330d158'/%3E%3C/svg%3E">
+
+<!-- GENERADOR NATIVO PNG PARA APPLE TOUCH ICON (Resuelve el problema de la 'A' en iPhone) -->
+<link rel="apple-touch-icon" sizes="180x180" id="appleTouchIconLink">
+<link rel="apple-touch-icon-precomposed" sizes="180x180" id="appleTouchIconPreLink">
+<link rel="icon" type="image/png" id="favIconLink">
+<script>
+(function() {
+  /* Genera un PNG rasterizado de 180x180 px en tiempo real para Safari iOS */
+  try {
+    const c = document.createElement('canvas');
+    c.width = 180;
+    c.height = 180;
+    const ctx = c.getContext('2d');
+    if (ctx) {
+      // Fondo oscuro elegante con gradiente
+      const bgGrad = ctx.createLinearGradient(0, 0, 180, 180);
+      bgGrad.addColorStop(0, '#181d29');
+      bgGrad.addColorStop(1, '#080a0f');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 180, 180);
+
+      // Borde interno sutil
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, 178, 178);
+
+      // Barras financieras con gradiente
+      const barGrad = ctx.createLinearGradient(0, 180, 0, 0);
+      barGrad.addColorStop(0, 'rgba(41, 151, 255, 0.45)');
+      barGrad.addColorStop(1, 'rgba(0, 199, 190, 0.15)');
+      ctx.fillStyle = barGrad;
+
+      function drawBar(x, y, w, h, r) {
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(x, y, w, h, r);
+        else ctx.rect(x, y, w, h);
+        ctx.fill();
+      }
+      drawBar(44, 94, 18, 41, 5);
+      drawBar(81, 70, 18, 65, 5);
+      drawBar(118, 44, 18, 91, 5);
+
+      // Curva de tendencia alcista Apple Stocks
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(34, 120);
+      ctx.bezierCurveTo(60, 116, 75, 84, 96, 78);
+      ctx.bezierCurveTo(116, 72, 128, 46, 146, 38);
+      ctx.lineWidth = 7;
+      ctx.lineCap = 'round';
+      const lineGrad = ctx.createLinearGradient(34, 120, 146, 38);
+      lineGrad.addColorStop(0, '#2997ff');
+      lineGrad.addColorStop(0.55, '#00c7be');
+      lineGrad.addColorStop(1, '#30d158');
+      ctx.strokeStyle = lineGrad;
+      ctx.shadowColor = 'rgba(41, 151, 255, 0.65)';
+      ctx.shadowBlur = 10;
+      ctx.stroke();
+
+      // Indicadores
+      ctx.beginPath();
+      ctx.arc(146, 38, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = '#30d158';
+      ctx.shadowBlur = 12;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(146, 38, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#30d158';
+      ctx.shadowBlur = 0;
+      ctx.fill();
+      ctx.restore();
+
+      const pngData = c.toDataURL('image/png');
+      document.getElementById('appleTouchIconLink').href = pngData;
+      document.getElementById('appleTouchIconPreLink').href = pngData;
+      document.getElementById('favIconLink').href = pngData;
+    }
+  } catch (err) {
+    console.error("No se pudo generar el icono dinámico:", err);
+  }
+})();
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
 <style>
 :root {
   --radius-lg: 20px;
@@ -136,10 +219,6 @@ body {
   max-width: 100vw !important;
   width: 100% !important;
   overscroll-behavior-x: none;
-  /* Margen seguro para el Notch / Dynamic Island de iOS */
-  padding-top: max(12px, env(safe-area-inset-top, 16px));
-  padding-left: env(safe-area-inset-left, 0px);
-  padding-right: env(safe-area-inset-right, 0px);
 }
 
 button, input, select { font: inherit; }
@@ -167,7 +246,7 @@ select:focus, input:focus {
 .app-container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 16px 28px 125px;
+  padding: 24px 28px 125px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -608,7 +687,11 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
 @media (max-width: 768px) {
   .split-grid { grid-template-columns: 1fr !important; }
   .app-container {
-    padding: max(16px, env(safe-area-inset-top, 16px)) 10px calc(125px + env(safe-area-inset-bottom, 16px));
+    /* Ajuste para pegarse justamente debajo de la barra de estado/notch */
+    padding-top: env(safe-area-inset-top) !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: calc(125px + env(safe-area-inset-bottom, 16px)) !important;
     width: 100% !important;
     max-width: 100vw !important;
     overflow-x: hidden !important;
@@ -621,7 +704,6 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
     align-items: stretch;
     gap: 8px;
     margin-bottom: 10px;
-    margin-top: 4px;
     width: 100%;
     max-width: 100%;
   }
@@ -2229,7 +2311,7 @@ function renderEuroView(m) {
       <div class="record-grid" style="grid-template-columns:repeat(3, 1fr)">
         <div class="record-card"><div class="record-lbl">🟢 ENTRADAS (RETIRAR)</div><div class="record-val" id="rec-eur-in" style="color:var(--green)">€${m.eurIn.toFixed(2)}</div><div class="record-sub">Fondos recibidos en tu banco</div></div>
         <div class="record-card"><div class="record-lbl">🔴 SALIDAS (AGREGAR)</div><div class="record-val" id="rec-eur-out" style="color:var(--red)">€${m.eurOut.toFixed(2)}</div><div class="record-sub">Fondos enviados de tu banco</div></div>
-        <div class="record-card"><div class="record-lbl">⚖️️ VOLUMEN TOTAL</div><div class="record-val" id="rec-eur-vol" style="color:var(--blue)">€${volTotal.toFixed(2)}</div><div class="record-sub">Balance neto: €${netBalance.toFixed(2)}</div></div>
+        <div class="record-card"><div class="record-lbl">⚖ VOLUMEN TOTAL</div><div class="record-val" id="rec-eur-vol" style="color:var(--blue)">€${volTotal.toFixed(2)}</div><div class="record-sub">Balance neto: €${netBalance.toFixed(2)}</div></div>
       </div>
     </div>
 
@@ -3528,7 +3610,7 @@ function renderFiscalView(m) {
         <!-- DESGLOSE TRIMESTRAL -->
         <div class="table-card" style="margin-bottom:0">
           <div style="font-size:13px;font-weight:750;margin-bottom:10px;display:flex;align-items:center;gap:6px">
-            <span>🗓️️</span> Desglose Trimestral (${fiscalSelectedYear})
+            <span>🗓</span> Desglose Trimestral (${fiscalSelectedYear})
           </div>
           <div class="table-scroll">
             <table class="apple-data-table">
@@ -3731,7 +3813,7 @@ function renderTarifasView() {
       </div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="apple-btn ${showHiddenFees ? 'apple-btn-sync' : ''}" onclick="toggleShowHiddenFees()">
-          ${showHiddenFees ? '👁️ Ocultar deshabilitados' : `👁️ Ver ocultos (${hiddenMethods.length})`}
+          ${showHiddenFees ? '👁️ Ocultar deshabilitados' : `👁️️ Ver ocultos (${hiddenMethods.length})`}
         </button>
         <button class="apple-btn apple-btn-sync" onclick="openAddMethodModal()">+ Agregar Método</button>
       </div>
@@ -3825,7 +3907,6 @@ window.updateSingleFee = (k, v) => {
   fees[k] = parseFloat(v) || 0;
   localStorage.setItem("airtm_fixed_fees_v2", JSON.stringify(fees));
   
-  // Re-evaluar inmediatamente todas las operaciones procesadas con las nuevas tarifas fijas
   if (processedOps && processedOps.length) {
     processedOps.forEach(op => {
       const fixedFee = getFixedFee(op["Payment Method"], op.Type);
@@ -3858,16 +3939,6 @@ window.resetAllFees = () => {
   
   toast("Todas las tarifas fijas fueron restablecidas");
   renderTarifasView();
-};
-
-window.resetAllFees = () => {
-  fees = structuredClone(DEFAULT_FEES);
-  hiddenMethods = [];
-  localStorage.removeItem("airtm_fixed_fees_v2");
-  localStorage.removeItem("airtm_hidden_methods");
-  toast("Todas las tarifas restablecidas");
-  renderTarifasView();
-  if (rawRecords.length) loadParsedObjects(rawRecords);
 };
 
 function renderEmptyState() {
