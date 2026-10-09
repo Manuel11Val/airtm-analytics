@@ -496,9 +496,14 @@ html[data-theme="light"] .theme-switch-slider {
   border: 0; background: transparent; color: var(--muted);
   padding: 8px 16px; border-radius: 13px; font-size: 11px; font-weight: 600;
   display: flex; align-items: center; gap: 7px; white-space: nowrap;
-  transition: color .2s ease, transform .15s ease;
+  transition: color .2s ease, transform .18s cubic-bezier(.2,.8,.2,1), background .2s ease;
+  min-height: 38px;
 }
-.apple-nav button:active { transform: scale(0.96); }
+.apple-nav button:active { transform: scale(.97); }
+.nav-icon, .cap-icon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.nav-icon { width: 18px; height: 18px; }
+.nav-icon svg, .cap-icon svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.apple-nav button.active .nav-icon svg { stroke-width: 1.9; }
 .apple-nav button.active {
   color: var(--text);
 }
@@ -528,7 +533,7 @@ html[data-theme="light"] .theme-switch-slider {
   pointer-events: none;
   padding: 0 16px;
   transform: translateZ(0);
-  will-change: transform;
+  contain: layout style;
 }
 .mobile-capsule-dock {
   pointer-events: auto;
@@ -537,14 +542,15 @@ html[data-theme="light"] .theme-switch-slider {
   -webkit-backdrop-filter: blur(35px) saturate(180%);
   border: 1px solid var(--capsule-border);
   border-radius: 999px;
-  padding: 5px 8px;
+  padding: 5px 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  gap: 3px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .28), 0 0 0 1px rgba(255, 255, 255, .045), inset 0 1px 0 rgba(255,255,255,.08);
   max-width: 440px;
   width: 100%;
+  isolation: isolate;
 }
 .capsule-btn {
   background: transparent;
@@ -553,25 +559,41 @@ html[data-theme="light"] .theme-switch-slider {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   color: var(--muted);
   font-size: 9.5px;
   font-weight: 600;
-  padding: 6px 10px;
+  padding: 7px 5px;
+  min-height: 52px;
   border-radius: 999px;
-  flex: 1;
-  transition: all .24s cubic-bezier(0.16, 1, 0.3, 1);
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: color .22s ease, background .24s cubic-bezier(.16,1,.3,1), transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease;
 }
-.capsule-btn span.cap-icon { font-size: 16px; line-height: 1; }
-.capsule-btn:active { transform: scale(0.92); }
+.capsule-btn .cap-icon { width: 21px; height: 21px; transition: transform .24s cubic-bezier(.16,1,.3,1), opacity .2s ease; }
+.capsule-btn .cap-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; line-height: 1.1; }
+.capsule-btn:active { transform: scale(.94); }
 .capsule-btn.active {
   color: var(--text);
   background: var(--segmented-active);
   font-weight: 750;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.055), 0 2px 8px rgba(0,0,0,.12);
+}
+.capsule-btn.active .cap-icon { transform: translateY(-.5px) scale(1.04); }
+.capsule-btn:focus-visible, .apple-nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+@media (max-width: 390px) {
+  .mobile-capsule-wrap { padding-left: 8px; padding-right: 8px; }
+  .mobile-capsule-dock { gap: 1px; padding: 4px; }
+  .capsule-btn { padding: 6px 2px; font-size: 8.5px; min-height: 49px; }
+  .capsule-btn .cap-icon { width: 20px; height: 20px; }
 }
 html[data-theme="dark"] .capsule-btn.active { color: #fff; }
-html[data-theme="light"] .capsule-btn.active { color: #000; }
+html[data-theme="light"] .capsule-btn.active { color: #111; }
+html[data-theme="dark"] .mobile-capsule-dock { border-color: rgba(255,255,255,.15); }
+html[data-theme="light"] .mobile-capsule-dock { box-shadow: 0 12px 30px rgba(0,0,0,.13), inset 0 1px 0 rgba(255,255,255,.72); }
 
 .page-view { display: none; }
 .page-view.active { display: block; animation: appleViewEnter .35s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -915,6 +937,164 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
   table.apple-data-table th, table.apple-data-table td { padding: 7px 8px; }
   .toast-notice { top: 12px; right: 12px; left: 12px; font-size: 10px; padding: 10px 14px; }
 }
+
+
+/* LIQUID GLASS — acabado visual global, conserva el sistema de colores y las vistas existentes */
+:root {
+  --radius-lg: 24px;
+  --radius-md: 17px;
+  --radius-sm: 12px;
+  --glass-highlight: rgba(255,255,255,.16);
+}
+html[data-theme="dark"] {
+  --surface: rgba(24, 29, 43, .58);
+  --surface-hover: rgba(37, 44, 62, .72);
+  --surface-card: rgba(25, 31, 46, .54);
+  --surface-sub: rgba(12, 17, 29, .42);
+  --glass-border: rgba(255,255,255,.12);
+  --shadow-main: 0 18px 48px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.055);
+  --capsule-bg: rgba(22, 27, 40, .76);
+}
+html[data-theme="light"] {
+  --surface: rgba(255,255,255,.66);
+  --surface-hover: rgba(255,255,255,.86);
+  --surface-card: rgba(255,255,255,.58);
+  --surface-sub: rgba(248,250,255,.56);
+  --glass-border: rgba(255,255,255,.76);
+  --shadow-main: 0 16px 40px rgba(31,41,55,.085), inset 0 1px 0 rgba(255,255,255,.8);
+  --capsule-bg: rgba(255,255,255,.76);
+}
+body {
+  background-image:
+    radial-gradient(ellipse at 8% 0%, rgba(41,151,255,.13), transparent 38%),
+    radial-gradient(ellipse at 92% 12%, rgba(191,90,242,.10), transparent 35%),
+    radial-gradient(ellipse at 58% 100%, rgba(0,199,190,.075), transparent 42%),
+    var(--bg-gradient);
+}
+.apple-header.app-topbar, .apple-control-hub, .apple-nav, .mobile-capsule-dock,
+.apple-kpi-card, .subkpi-card, .chart-box-card, .record-box, .table-card,
+.record-card, .portfolio-bar-wrap, .comp-bar, .recent-item, .status-pill,
+.apple-btn, .theme-switch-wrap, .app-menu, .empty-hero {
+  backdrop-filter: blur(30px) saturate(165%);
+  -webkit-backdrop-filter: blur(30px) saturate(165%);
+  border-color: var(--glass-border);
+}
+.apple-header.app-topbar, .apple-control-hub, .apple-nav, .apple-kpi-card,
+.chart-box-card, .record-box, .table-card, .empty-hero {
+  position: relative;
+  isolation: isolate;
+  box-shadow: var(--shadow-main);
+}
+.apple-header.app-topbar::before, .apple-control-hub::before, .apple-kpi-card::before,
+.chart-box-card::before, .record-box::before, .table-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,.075), transparent 34%, transparent 72%, rgba(255,255,255,.025));
+  z-index: -1;
+}
+.apple-kpi-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 0;
+  min-height: 118px;
+  padding: 19px 14px 17px;
+  border-radius: 22px;
+  border-top-width: 2px !important;
+  overflow: hidden;
+  transition: transform .24s cubic-bezier(.2,.8,.2,1), background .24s ease, border-color .24s ease, box-shadow .24s ease;
+}
+.apple-kpi-card:hover { transform: translateY(-3px); box-shadow: 0 22px 50px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.09); }
+.kpi-head { width: 100%; justify-content: center; margin-bottom: 11px; min-height: 14px; }
+.kpi-label { text-align: center; line-height: 1.35; letter-spacing: .75px; }
+.kpi-badge-info { position: absolute; top: 13px; right: 14px; }
+.kpi-value {
+  width: 100%; max-width: 100%; text-align: center; line-height: 1.18;
+  font-size: clamp(19px, 1.65vw, 27px); font-weight: 760; letter-spacing: -.7px;
+  font-variant-numeric: tabular-nums; overflow-wrap: anywhere; word-break: normal;
+  display: block; white-space: normal;
+}
+.kpi-delta { justify-content: center; text-align: center; flex-wrap: wrap; line-height: 1.35; }
+.subkpi-card { border-radius: 19px; padding: 15px 12px; min-width: 0; }
+.subkpi-val { line-height: 1.25; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.chart-box-card, .record-box, .table-card { border-radius: 23px; }
+.apple-control-hub { border-radius: 23px; }
+.apple-nav { border-radius: 20px; }
+.apple-btn, .sync-status, .app-more-button { transition: transform .2s ease, background .2s ease, border-color .2s ease; }
+.apple-btn:focus-visible, button:focus-visible, .theme-switch-wrap:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.sync-status.syncing .sync-dot { box-shadow: 0 0 0 4px var(--blue-glow); }
+.toast-notice { backdrop-filter: blur(28px) saturate(160%); -webkit-backdrop-filter: blur(28px) saturate(160%); }
+@media (min-width: 961px) {
+  .kpi-row { gap: 15px; }
+  .apple-kpi-card { min-height: 132px; padding: 22px 12px 19px; }
+}
+@media (max-width: 960px) {
+  .apple-kpi-card { min-height: 112px; }
+  .kpi-value { font-size: clamp(18px, 3.1vw, 24px); }
+}
+@media (max-width: 768px) {
+  .apple-kpi-card { min-height: 103px; padding: 13px 8px 12px; border-radius: 17px; }
+  .kpi-head { margin-bottom: 8px; }
+  .kpi-label { font-size: 9px; letter-spacing: .45px; }
+  .kpi-value { font-size: clamp(16px, 4.2vw, 21px); letter-spacing: -.45px; line-height: 1.2; }
+  .kpi-delta { font-size: 9px; margin-top: 5px; }
+  .subkpi-card { border-radius: 15px; }
+  .chart-box-card, .record-box, .table-card { border-radius: 18px; }
+  .apple-control-hub { border-radius: 18px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .capsule-btn:hover:not(.active) { color: var(--text); background: rgba(127,127,127,.08); }
+  .apple-nav button:hover:not(.active) { color: var(--text); }
+}
+@media (max-width: 768px) and (orientation: landscape) {
+  .mobile-capsule-wrap { bottom: max(7px, env(safe-area-inset-bottom, 7px)); }
+  .mobile-capsule-dock { max-width: 520px; }
+  .capsule-btn { min-height: 45px; padding-top: 4px; padding-bottom: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+
+/* === AirTM Pro: balanced premium spacing pass (visual-only overrides) === */
+@media (min-width: 961px) {
+  .app-container { padding: 18px 24px 112px; }
+  .apple-header.app-topbar { margin-bottom: 12px; }
+  .apple-control-hub { padding: 8px 14px; margin-bottom: 14px; }
+  .kpi-row { gap: 12px; margin-bottom: 10px; }
+  .apple-kpi-card {
+    min-height: 116px; padding: 16px 11px 14px; border-radius: 20px;
+  }
+  .kpi-head { margin-bottom: 8px; }
+  .kpi-value { font-size: clamp(19px, 1.45vw, 25px); line-height: 1.16; }
+  .kpi-delta { margin-top: 4px; }
+  .subkpi-row { gap: 10px; margin-bottom: 12px; }
+  .subkpi-card { padding: 12px 10px; border-radius: 17px; }
+  .subkpi-icon { margin-bottom: 3px; }
+  .subkpi-val { margin: 2px 0; font-size: 15px; }
+  .portfolio-bar-wrap { padding: 9px 14px; margin-bottom: 12px; }
+  .chart-box-card { padding: 17px 18px; margin-bottom: 12px; border-radius: 20px; }
+  .chart-header { margin-bottom: 9px; }
+  .split-grid { gap: 12px; margin-bottom: 12px; }
+  .record-box { padding: 15px 17px; margin-bottom: 12px; border-radius: 20px; }
+  .table-card { margin-bottom: 12px; }
+}
+@media (min-width: 961px) and (max-width: 1280px) {
+  .app-container { padding-left: 18px; padding-right: 18px; }
+  .kpi-row { gap: 9px; }
+  .apple-kpi-card { padding-left: 8px; padding-right: 8px; }
+  .kpi-label { font-size: 9px; letter-spacing: .45px; }
+  .kpi-value { font-size: clamp(17px, 1.55vw, 22px); }
+  .subkpi-row { gap: 8px; }
+  .subkpi-card { padding-left: 8px; padding-right: 8px; }
+}
+/* Tablet and mobile retain their existing independent responsive rules. */
+
 </style>
 </head>
 <body>
@@ -1006,14 +1186,14 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
 
   <!-- NAVEGACIÓN DESKTOP CON INDICADOR FLOTANTE -->
   <div class="nav-wrapper">
-    <nav class="apple-nav" id="navTabs">
+    <nav class="apple-nav" id="navTabs" aria-label="Navegación principal">
       <div class="nav-indicator" id="navIndicator"></div>
-      <button class="active" data-tab="general">🌐 Visión General</button>
-      <button data-tab="euro">💶 Zona Euro (€)</button>
-      <button data-tab="soles">💰 Zona Soles (S/.)</button>
-      <button data-tab="personal">👤 Rendimiento Personal</button>
-      <button data-tab="fiscal">🏛 Control Fiscal</button>
-      <button data-tab="tarifas">⚙️ Tarifas Fijas</button>
+      <button class="active" data-tab="general" aria-current="page"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></svg></span><span>Visión General</span></button>
+      <button data-tab="euro"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5.5A7.5 7.5 0 0 0 7 10H4.5m0 0 2.8-2.8M4.5 10l2.8 2.8M4.5 14H7a7.5 7.5 0 0 0 12 4.5"/><path d="M4.5 12h10"/></svg></span><span>Zona Euro (€)</span></button>
+      <button data-tab="soles"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 9h10M7 12h7M7 15h4"/></svg></span><span>Zona Soles (S/.)</span></button>
+      <button data-tab="personal"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.4 3.1-5.2 7-5.2s6.4 1.8 7 5.2"/></svg></span><span>Rendimiento Personal</span></button>
+      <button data-tab="fiscal"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-5 9 5M5 10h14M6.5 10v8M11 10v8M13 10v8M17.5 10v8M4 20h16"/></svg></span><span>Control Fiscal</span></button>
+      <button data-tab="tarifas"><span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span><span>Tarifas Fijas</span></button>
     </nav>
   </div>
 
@@ -1030,30 +1210,30 @@ table.apple-data-table tr:hover td { background: var(--surface-hover); }
 
 <!-- BARRA CÁPSULA FLOTANTE EN MÓVIL ESTILO APPLE MUSIC -->
 <div class="mobile-capsule-wrap">
-  <nav class="mobile-capsule-dock" id="mobileCapsuleNav">
-    <button class="capsule-btn active" data-tab="general">
-      <span class="cap-icon">🌐</span>
-      <span>General</span>
+  <nav class="mobile-capsule-dock" id="mobileCapsuleNav" aria-label="Navegación principal móvil">
+    <button class="capsule-btn active" data-tab="general" aria-label="General" aria-current="page">
+      <span class="cap-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></svg></span>
+      <span class="cap-label">General</span>
     </button>
-    <button class="capsule-btn" data-tab="euro">
-      <span class="cap-icon">💶</span>
-      <span>Euro</span>
+    <button class="capsule-btn" data-tab="euro" aria-label="Euro">
+      <span class="cap-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5.5A7.5 7.5 0 0 0 7 10H4.5m0 0 2.8-2.8M4.5 10l2.8 2.8M4.5 14H7a7.5 7.5 0 0 0 12 4.5"/><path d="M4.5 12h10"/></svg></span>
+      <span class="cap-label">Euro</span>
     </button>
-    <button class="capsule-btn" data-tab="soles">
-      <span class="cap-icon">💰</span>
-      <span>Soles</span>
+    <button class="capsule-btn" data-tab="soles" aria-label="Soles">
+      <span class="cap-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 9h10M7 12h7M7 15h4"/></svg></span>
+      <span class="cap-label">Soles</span>
     </button>
-    <button class="capsule-btn" data-tab="personal">
-      <span class="cap-icon">👤</span>
-      <span>Personal</span>
+    <button class="capsule-btn" data-tab="personal" aria-label="Personal">
+      <span class="cap-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.6-3.4 3.1-5.2 7-5.2s6.4 1.8 7 5.2"/></svg></span>
+      <span class="cap-label">Personal</span>
     </button>
-    <button class="capsule-btn" data-tab="fiscal">
-      <span class="cap-icon">🏛️</span>
-      <span>Fiscal</span>
+    <button class="capsule-btn" data-tab="fiscal" aria-label="Fiscal">
+      <span class="cap-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 9 9-5 9 5M5 10h14M6.5 10v8M11 10v8M13 10v8M17.5 10v8M4 20h16"/></svg></span>
+      <span class="cap-label">Fiscal</span>
     </button>
-    <button class="capsule-btn" data-tab="tarifas">
-      <span class="cap-icon">⚙️</span>
-      <span>Tarifas</span>
+    <button class="capsule-btn" data-tab="tarifas" aria-label="Tarifas">
+      <span class="cap-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span>
+      <span class="cap-label">Tarifas</span>
     </button>
   </nav>
 </div>
@@ -1202,7 +1382,9 @@ function updateNavIndicator() {
     indicator.style.width = `${activeBtn.offsetWidth}px`;
   }
   $$("#mobileCapsuleNav button").forEach(b => {
-    b.classList.toggle("active", b.dataset.tab === currentTab);
+    const active = b.dataset.tab === currentTab;
+    b.classList.toggle("active", active);
+    if (active) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
   });
 }
 
@@ -1292,16 +1474,24 @@ function formatDisplayDate(d, showTime = false) {
 }
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
+  // El temporizador permanece activo también durante res.text(), no solo hasta recibir cabeceras.
   const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeoutMs);
+  const id = setTimeout(() => controller.abort(new DOMException("Tiempo de espera agotado", "TimeoutError")), timeoutMs);
   try {
     const res = await fetch(url, { ...options, signal: controller.signal });
-    clearTimeout(id);
+    // Se limpia tras un margen corto para no dejar temporizadores innecesarios en la página.
+    // El límite de aborto sigue cubriendo la lectura del cuerpo de la respuesta.
+    res._airtmTimeoutCleanup = () => clearTimeout(id);
     return res;
   } catch (err) {
     clearTimeout(id);
     throw err;
   }
+}
+
+async function readResponseText(res) {
+  try { return await res.text(); }
+  finally { if (res && typeof res._airtmTimeoutCleanup === "function") res._airtmTimeoutCleanup(); }
 }
 
 function setSyncUI(state, detail = "") {
@@ -1331,8 +1521,9 @@ function setSyncUI(state, detail = "") {
     if (cacheText) updateCacheStatus();
   } else if (state === "error") {
     if (status) status.classList.add("error");
-    if (label) label.textContent = "Sin conexión";
-    if (driveText) driveText.textContent = "Sin conexión";
+    const hasUsableData = processedOps.length > 0;
+    if (label) label.textContent = hasUsableData ? "Error · datos guardados" : "Sin conexión";
+    if (driveText) driveText.textContent = hasUsableData ? "Sin conexión · caché disponible" : "Sin conexión";
     if (syncIcon) syncIcon.textContent = "↻";
     if (syncText) syncText.textContent = "Reintentar";
   }
@@ -1411,7 +1602,10 @@ function restoreDashboardCache() {
 }
 
 async function performDriveSync(options = {}) {
-  if (syncInProgress) return;
+  if (syncInProgress) {
+    if (!options.silent) toast("La actualización ya está en curso…");
+    return false;
+  }
   syncInProgress = true;
   const silent = !!options.silent;
 
@@ -1426,7 +1620,7 @@ async function performDriveSync(options = {}) {
     // para poder identificar respuestas HTML, errores HTTP o respuestas truncadas.
     try {
       const res = await fetchWithTimeout(APPS_SCRIPT_URL, { redirect: "follow", cache: "no-store" }, 12000);
-      const raw = await res.text();
+      const raw = await readResponseText(res);
       directInfo = `HTTP ${res.status}`;
       if (!res.ok) {
         throw new Error(`Apps Script respondió ${res.status}`);
@@ -1446,15 +1640,25 @@ async function performDriveSync(options = {}) {
     if (!json) {
       setSyncUI("syncing", "Reintentando…");
       const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(APPS_SCRIPT_URL)}`;
-      const pRes = await fetchWithTimeout(proxyUrl, { cache: "no-store" }, 10000);
-      const textData = await pRes.text();
-      if (!pRes.ok) throw new Error(`Respaldo HTTP ${pRes.status}`);
-      try {
-        json = JSON.parse(textData);
-      } catch (e) {
-        const preview = String(textData || "").replace(/\s+/g, " ").slice(0, 140);
-        throw new Error(`El respaldo devolvió una respuesta no válida${preview ? `: ${preview}` : ""}`);
+      let lastProxyError = null;
+      for (let attempt = 1; attempt <= 2 && !json; attempt++) {
+        try {
+          if (attempt > 1) await new Promise(resolve => setTimeout(resolve, 650));
+          const pRes = await fetchWithTimeout(proxyUrl, { cache: "no-store" }, 14000);
+          const textData = await readResponseText(pRes);
+          if (!pRes.ok) throw new Error(`Respaldo HTTP ${pRes.status}`);
+          try {
+            json = JSON.parse(textData);
+          } catch (e) {
+            const preview = String(textData || "").replace(/\s+/g, " ").slice(0, 140);
+            throw new Error(`El respaldo devolvió una respuesta no válida${preview ? `: ${preview}` : ""}`);
+          }
+        } catch (proxyErr) {
+          lastProxyError = proxyErr;
+          console.warn(`Intento de respaldo ${attempt}/2 fallido:`, proxyErr);
+        }
       }
+      if (!json) throw lastProxyError || new Error("No se pudo conectar con el respaldo de Drive");
     }
 
     if (!json || typeof json !== "object") throw new Error("Respuesta vacía o inválida del servidor");
@@ -1489,6 +1693,7 @@ async function performDriveSync(options = {}) {
     if (!ws) throw new Error("El Excel recibido no contiene ninguna hoja");
     const sheetData = XLSX.utils.sheet_to_json(ws, { defval: "" });
     if (!sheetData || !sheetData.length) throw new Error("El archivo en Drive está vacío");
+    if (sheetData.length < 1 || !Object.keys(sheetData[0] || {}).length) throw new Error("El archivo no contiene columnas reconocibles");
 
     loadParsedObjects(sheetData, { saveCache: true, fromCache: false });
     setSyncUI("done");
@@ -4247,11 +4452,15 @@ function renderActiveTab() {
   const activeView = $(`#view-${currentTab}`);
   if (activeView) activeView.classList.add("active");
 
-  $$("#navTabs button").forEach(b => {
-    b.classList.toggle("active", b.dataset.tab === currentTab);
+  $$("#navTabs button[data-tab]").forEach(b => {
+    const active = b.dataset.tab === currentTab;
+    b.classList.toggle("active", active);
+    if (active) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
   });
   $$("#mobileCapsuleNav button").forEach(b => {
-    b.classList.toggle("active", b.dataset.tab === currentTab);
+    const active = b.dataset.tab === currentTab;
+    b.classList.toggle("active", active);
+    if (active) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
   });
   updateNavIndicator();
 
