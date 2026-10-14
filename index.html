@@ -1880,6 +1880,466 @@ body {
   }
 }
 
+
+/* === MEJORAS EJECUTIVAS V2: ACTIVIDAD RECIENTE, TABLA CON DIVISAS, DONUT SIN SOLAPAMIENTO Y PREVIEW DE GRÁFICOS === */
+.recent-card-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: 16px;
+  background: var(--surface-sub);
+  border: 1px solid var(--glass-border);
+  transition: transform .18s cubic-bezier(.16,1,.3,1), background .18s ease, border-color .18s ease;
+}
+.recent-card-v2:hover {
+  background: var(--surface-hover);
+  border-color: rgba(41, 151, 255, 0.32);
+  transform: translateY(-1px);
+}
+.rc2-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.rc2-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.rc2-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.rc2-icon.add {
+  background: var(--green-glow);
+  color: var(--green);
+  border: 1px solid rgba(48, 209, 88, 0.25);
+}
+.rc2-icon.ret {
+  background: var(--red-glow);
+  color: var(--red);
+  border: 1px solid rgba(255, 69, 58, 0.25);
+}
+.rc2-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.rc2-method-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.rc2-method {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rc2-time {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rc2-profit-box {
+  text-align: right;
+  flex-shrink: 0;
+}
+.rc2-profit-val {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 13.5px;
+  color: var(--green);
+  line-height: 1.1;
+}
+.rc2-profit-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.rc2-flow-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 11px;
+  background: var(--surface-card);
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  flex-wrap: wrap;
+}
+.rc2-flow-steps {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.rc2-pill-amt {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: 7px;
+  font-weight: 750;
+  background: rgba(128,128,128,0.1);
+}
+.rc2-pill-amt.eur { color: var(--blue); background: rgba(41, 151, 255, 0.12); }
+.rc2-pill-amt.pen { color: var(--orange); background: rgba(255, 159, 10, 0.12); }
+.rc2-pill-amt.usdc { color: var(--text); background: rgba(128, 128, 128, 0.14); }
+.rc2-rate-tag {
+  font-size: 9.5px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-left: auto;
+}
+.tbl-amt-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+.tbl-cur-tag {
+  font-size: 8.5px;
+  font-weight: 800;
+  padding: 1.5px 5px;
+  border-radius: 5px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.tbl-cur-tag.eur { background: rgba(41, 151, 255, 0.15); color: var(--blue); }
+.tbl-cur-tag.pen { background: rgba(255, 159, 10, 0.16); color: var(--orange); }
+.tbl-cur-tag.usdc { background: rgba(48, 209, 88, 0.14); color: var(--green); }
+.table-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-end;
+}
+.table-search-input {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 11px;
+  border-radius: 10px;
+  min-width: 210px;
+  background: var(--surface-sub);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+}
+.chart-inspect-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(41, 151, 255, 0.12), rgba(255, 149, 0, 0.08));
+  border: 1px solid rgba(41, 151, 255, 0.32);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  animation: appleViewEnter .2s ease;
+}
+.chart-inspect-metrics {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chart-inspect-open-btn {
+  border: 1px solid rgba(41, 151, 255, 0.45);
+  background: var(--blue);
+  color: #ffffff;
+  font-family: var(--font-main);
+  font-size: 10px;
+  font-weight: 750;
+  padding: 4px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.chart-inspect-open-btn:active { transform: scale(0.95); }
+.subkpi-note.orange { color: var(--orange); font-weight: 700; }
+.subkpi-note.red { color: var(--red); font-weight: 700; }
+.bizum-mini-bar {
+  height: 4px;
+  background: rgba(128,128,128,0.18);
+  border-radius: 99px;
+  overflow: hidden;
+  margin: 5px 0 4px;
+}
+.bizum-mini-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width .4s ease;
+}
+@media (max-width: 768px) {
+  .recent-card-v2 { padding: 9px 11px; border-radius: 13px; gap: 6px; }
+  .rc2-method { font-size: 11.5px; }
+  .rc2-profit-val { font-size: 12.5px; }
+  .rc2-flow-bar { padding: 5px 8px; font-size: 9.5px; }
+  .table-search-input { min-width: 140px; flex: 1; }
+  .chart-inspect-pill { padding: 7px 10px; font-size: 10px; }
+  .subkpi-row > .subkpi-card:nth-child(5):last-child .bizum-mini-bar { display: none; }
+}
+
+
+/* === REDISEÑO EJECUTIVO DEL GRÁFICO CIRCULAR (ALTURA COMPLETA, SIN SCROLLBAR FEA, CONMUTADOR OPS/GANANCIA Y PIE DE MÉTRICAS) === */
+.donut-card-v3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.donut-card-v3 .exec-donut-layout {
+  grid-template-columns: 220px 1fr;
+  gap: 18px;
+  align-items: center;
+  flex: 1;
+  margin: 6px 0 12px;
+}
+.donut-card-v3 .exec-donut-canvas-box {
+  width: 220px;
+  height: 220px;
+}
+.donut-card-v3 .exec-donut-legend {
+  max-height: none !important;
+  overflow-y: visible !important;
+  gap: 8px;
+  padding-right: 0;
+}
+.exec-legend-subrow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 1px dashed var(--glass-border);
+  font-family: var(--font-mono);
+}
+.donut-summary-footer {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--glass-border);
+}
+.donut-summary-pill {
+  background: var(--surface-sub);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 8px 10px;
+  text-align: center;
+}
+.dsp-lbl {
+  font-size: 8px;
+  font-weight: 750;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.dsp-val {
+  font-size: 12.5px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dsp-sub {
+  font-size: 8.5px;
+  color: var(--muted);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 768px) {
+  .donut-card-v3 .exec-donut-layout {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .donut-card-v3 .exec-donut-canvas-box {
+    width: 185px;
+    height: 185px;
+  }
+  .donut-summary-footer {
+    gap: 6px;
+  }
+  .donut-summary-pill {
+    padding: 6px 6px;
+  }
+  .dsp-val { font-size: 11px; }
+}
+
+
+/* === OPTIMIZACIÓN MÓVIL V4: LECTURA INTUITIVA, BANNER DE GRÁFICO ULTRA-COMPACTO Y TABLA EN 1 FILA === */
+.chart-inspect-pill {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  margin-bottom: 8px !important;
+  padding: 6px 12px !important;
+  border-radius: 12px !important;
+  background: var(--surface-sub) !important;
+  border: 1px solid var(--glass-border) !important;
+  font-size: 11px !important;
+  font-family: var(--font-mono) !important;
+  box-shadow: none !important;
+}
+.chart-inspect-metrics {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  min-width: 0;
+  text-align: left;
+}
+.chart-inspect-open-btn {
+  border: none !important;
+  background: var(--blue) !important;
+  color: #ffffff !important;
+  font-family: var(--font-main) !important;
+  font-size: 10px !important;
+  font-weight: 750 !important;
+  padding: 5px 10px !important;
+  border-radius: 8px !important;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .chart-inspect-pill {
+    padding: 6px 10px !important;
+    font-size: 9.8px !important;
+    gap: 6px !important;
+  }
+  .chart-inspect-metrics {
+    gap: 5px !important;
+  }
+  .chart-inspect-open-btn {
+    padding: 4px 8px !important;
+    font-size: 9.5px !important;
+  }
+
+  /* Actividad Reciente en móvil: 1 sola línea para fecha/hora y 1 sola línea para el flujo Envías -> Recibes */
+  .recent-card-v2 {
+    padding: 9px 10px !important;
+    gap: 6px !important;
+  }
+  .rc2-top {
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+  .rc2-icon {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+  }
+  .rc2-method-row {
+    gap: 4px !important;
+    flex-wrap: nowrap !important;
+  }
+  .rc2-method {
+    font-size: 11.5px !important;
+    max-width: 115px;
+  }
+  .rc2-time {
+    font-size: 9.2px !important;
+    white-space: nowrap !important;
+    gap: 4px !important;
+  }
+  .rc2-profit-val {
+    font-size: 12.5px !important;
+    white-space: nowrap !important;
+  }
+  .rc2-profit-sub {
+    font-size: 8.5px !important;
+    white-space: nowrap !important;
+  }
+  .rc2-flow-bar {
+    padding: 5px 8px !important;
+    font-size: 9.5px !important;
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .rc2-flow-bar::-webkit-scrollbar { display: none; }
+  .rc2-flow-steps {
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    gap: 4px !important;
+  }
+  .rc2-pill-amt {
+    padding: 1.5px 5px !important;
+    font-size: 9.2px !important;
+    white-space: nowrap !important;
+  }
+  .rc2-rate-tag {
+    font-size: 8.8px !important;
+    white-space: nowrap !important;
+    padding-left: 4px;
+  }
+
+  /* Controles de Tabla Consolidada en móvil: Buscador arriba + (Filtro Tipo + CSV + PDF) alineados en 1 sola fila */
+  .table-header-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+  .table-controls-bar {
+    display: grid !important;
+    grid-template-columns: 1fr auto auto !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+  .table-search-input {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    height: 34px !important;
+    font-size: 11px !important;
+  }
+  #consolidatedTypeFilter {
+    width: 100% !important;
+    height: 32px !important;
+    font-size: 10.5px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1924,6 +2384,7 @@ body {
       <div class="app-menu" id="appMenu">
         <button type="button" id="menuSyncAction"><span>↻</span><span>Actualizar datos</span></button>
         <button type="button" id="menuLocalAction"><span>📥</span><span>Cargar archivo local</span></button>
+        <button type="button" id="menuTimezoneAction"><span>🕐</span><span id="menuTimezoneText">Hora: España (CET/CEST)</span></button>
         <button type="button" id="menuAcceptorAction"><span>🛡️</span><span id="menuAcceptorText">Modo: Solo Cajero P2P</span></button>
         <div class="app-menu-divider"></div>
         <div class="app-menu-meta"><span>Saldo AirTM</span><b id="statMenuBalance" style="color:var(--green)">—</b></div>
@@ -2142,18 +2603,19 @@ let metricIndex = { completed: [], attempts: [], rate: null, byMonth: new Map(),
 let dataVersion = 0;
 let metricCache = new Map();
 let syncInProgress = false;
-const DATA_CACHE_KEY = "airtm_dashboard_data_v4";
-const DATA_CACHE_VERSION = 4;
+const DATA_CACHE_KEY = "airtm_dashboard_data_v6";
+const DATA_CACHE_VERSION = 6;
 
 let currentGranularity = "Mensual";
 let selectedHubYear = null;
 let currentTab = "general";
 let mainChartCurrency = "USDC";
+let donutChartMetric = "OPS";
 let euroChartCurrency = "EUR";
 let euroChartTimeframe = "Diario";
 let solesChartCurrency = "PEN";
 let solesChartTimeframe = "Diario";
-const timezoneMode = "UTC";
+let timezoneMode = "ESPAÑA"; localStorage.setItem("airtm_timezone_mode", "ESPAÑA");
 let onlyAcceptorMode = localStorage.getItem("airtm_acceptor_mode") !== "ALL";
 let fiscalMode = "ahorro";
 let fiscalSelectedYear = null;
@@ -2210,41 +2672,55 @@ function updateNavIndicator() {
 }
 
 function parseStrictUTCDate(val) {
-  if (!val) return null;
-  if (val instanceof Date && !isNaN(val)) return val;
-
-  // Si viene como número serial de Excel/SheetJS (días desde 1899-12-30 UTC exacto redondeado al segundo)
+  if (!val && val !== 0) return null;
+  if (val instanceof Date && !isNaN(val)) return new Date(val.getTime());
   if (typeof val === "number") {
     const totalSeconds = Math.round((val - 25569) * 86400);
     return new Date(totalSeconds * 1000);
   }
-
   const s = String(val).trim();
-
-  // Formato ISO del CSV de AirTM: "2026-10-13 12:12:47" o "2026-10-13T12:12:47.000Z"
-  const isoMatch = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:[T\s]+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+  if (!s) return null;
+  if (/^\d{5}(\.\d+)?$/.test(s)) {
+    const totalSeconds = Math.round((parseFloat(s) - 25569) * 86400);
+    return new Date(totalSeconds * 1000);
+  }
+  if (/(?:Z|[+-]\d{2}:?\d{2})$/i.test(s) && s.includes("T")) {
+    const dIso = new Date(s);
+    if (!isNaN(dIso)) return dIso;
+  }
+  const isoMatch = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})(?:[T\s]+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?(?:\.\d+)?\s*(AM|PM)?)?(?:\s*(?:UTC|Z|([+-]\d{2}):?(\d{2})))?$/i);
   if (isoMatch) {
     const year = parseInt(isoMatch[1], 10);
     const month = parseInt(isoMatch[2], 10) - 1;
     const day = parseInt(isoMatch[3], 10);
-    const hour = isoMatch[4] ? parseInt(isoMatch[4], 10) : 0;
+    let hour = isoMatch[4] ? parseInt(isoMatch[4], 10) : 0;
     const min = isoMatch[5] ? parseInt(isoMatch[5], 10) : 0;
     const sec = isoMatch[6] ? parseInt(isoMatch[6], 10) : 0;
-    return new Date(Date.UTC(year, month, day, hour, min, sec));
+    const ampm = (isoMatch[7] || "").toUpperCase();
+    if (ampm === "PM" && hour < 12) hour += 12;
+    if (ampm === "AM" && hour === 12) hour = 0;
+    let utcMs = Date.UTC(year, month, day, hour, min, sec);
+    if (isoMatch[8]) {
+      const sign = isoMatch[8].startsWith("-") ? -1 : 1;
+      const offH = Math.abs(parseInt(isoMatch[8], 10));
+      const offM = parseInt(isoMatch[9] || "0", 10);
+      utcMs -= sign * (offH * 3600000 + offM * 60000);
+    }
+    return new Date(utcMs);
   }
-
-  // Formato Español: "13/10/2026 12:12:47"
-  const esMatch = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:\s+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?/);
+  const esMatch = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})(?:[T\s]+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?\s*(AM|PM)?)?/i);
   if (esMatch) {
     const day = parseInt(esMatch[1], 10);
     const month = parseInt(esMatch[2], 10) - 1;
     const year = parseInt(esMatch[3], 10);
-    const hour = esMatch[4] ? parseInt(esMatch[4], 10) : 0;
+    let hour = esMatch[4] ? parseInt(esMatch[4], 10) : 0;
     const min = esMatch[5] ? parseInt(esMatch[5], 10) : 0;
     const sec = esMatch[6] ? parseInt(esMatch[6], 10) : 0;
+    const ampm = (esMatch[7] || "").toUpperCase();
+    if (ampm === "PM" && hour < 12) hour += 12;
+    if (ampm === "AM" && hour === 12) hour = 0;
     return new Date(Date.UTC(year, month, day, hour, min, sec));
   }
-
   const parsed = new Date(s);
   return isNaN(parsed) ? null : parsed;
 }
@@ -2325,7 +2801,7 @@ function decodeBufferToRows(arrayBuffer, fileName = "") {
   const wb = XLSX.read(arrayBuffer, { type: "array", cellDates: false, dense: true });
   const ws = wb.Sheets[wb.SheetNames[0]];
   if (!ws) return [];
-  return XLSX.utils.sheet_to_json(ws, { defval: "", raw: false, dateNF: "yyyy-mm-dd hh:mm:ss" });
+  return XLSX.utils.sheet_to_json(ws, { defval: "", raw: true });
 }
 
 function num(val) {
@@ -2364,18 +2840,47 @@ function getFixedFee(method, type) {
   return fees[`${c}||${type}`] ?? fees[`${method}||${type}`] ?? 0.0;
 }
 
-function getDateComponentsInTz(d) {
+function getSpainOffsetHoursUTC(utcDate) {
+  const y = utcDate.getUTCFullYear();
+  const march31Dow = new Date(Date.UTC(y, 2, 31, 1, 0, 0)).getUTCDay();
+  const startCEST = Date.UTC(y, 2, 31 - march31Dow, 1, 0, 0);
+  const oct31Dow = new Date(Date.UTC(y, 9, 31, 1, 0, 0)).getUTCDay();
+  const endCEST = Date.UTC(y, 9, 31 - oct31Dow, 1, 0, 0);
+  const t = utcDate.getTime();
+  return (t >= startCEST && t < endCEST) ? 2 : 1;
+}
+
+function getDateComponentsInTz(d, mode = timezoneMode) {
   if (!d || isNaN(d)) return { year: 2026, month: 1, day: 1, hour: 0, minute: 0, second: 0, weekday: 0 };
+  let offsetHours = 0;
+  if (mode === "ESPAÑA") {
+    offsetHours = getSpainOffsetHoursUTC(d);
+  } else if (mode === "PERU") {
+    offsetHours = -5;
+  }
+  const shifted = new Date(d.getTime() + offsetHours * 3600000);
   return {
-    year: d.getUTCFullYear(),
-    month: d.getUTCMonth() + 1,
-    day: d.getUTCDate(),
-    hour: d.getUTCHours(),
-    minute: d.getUTCMinutes(),
-    second: d.getUTCSeconds(),
-    weekday: d.getUTCDay()
+    year: shifted.getUTCFullYear(),
+    month: shifted.getUTCMonth() + 1,
+    day: shifted.getUTCDate(),
+    hour: shifted.getUTCHours(),
+    minute: shifted.getUTCMinutes(),
+    second: shifted.getUTCSeconds(),
+    weekday: shifted.getUTCDay()
   };
 }
+
+window.toggleTimezoneMode = function() {
+  const order = ["ESPAÑA", "UTC", "PERU"];
+  const nextIdx = (order.indexOf(timezoneMode) + 1) % order.length;
+  timezoneMode = order[nextIdx];
+  localStorage.setItem("airtm_timezone_mode", timezoneMode);
+  rebuildMetricIndex();
+  syncPeriodSelectors();
+  updateHeaderPill();
+  renderActiveTab();
+  toast("🕐 Zona horaria cambiada a: " + getTzLabel(timezoneMode));
+};
 
 function formatDisplayDate(d, showTime = false) {
   if (!d) return "—";
@@ -2633,6 +3138,7 @@ $("#refreshDriveBtn").addEventListener("click", performDriveSync);
 $("#syncStatusButton")?.addEventListener("click", () => performDriveSync({ silent: false }));
 $("#menuSyncAction")?.addEventListener("click", () => { $("#appMenu")?.classList.remove("open"); performDriveSync({ silent:false }); });
 $("#menuLocalAction")?.addEventListener("click", () => { $("#appMenu")?.classList.remove("open"); $("#fileInput")?.click(); });
+$("#menuTimezoneAction")?.addEventListener("click", () => { $("#appMenu")?.classList.remove("open"); toggleTimezoneMode(); });
 $("#menuAcceptorAction")?.addEventListener("click", () => { $("#appMenu")?.classList.remove("open"); toggleAcceptorMode(); });
 $("#appMoreButton")?.addEventListener("click", e => { e.stopPropagation(); $("#appMenu")?.classList.toggle("open"); });
 document.addEventListener("click", e => { if (!e.target.closest("#appMenu") && !e.target.closest("#appMoreButton")) $("#appMenu")?.classList.remove("open"); });
@@ -2711,11 +3217,11 @@ function loadParsedObjects(rows, options = {}) {
   const processed = [];
 
   for (const r of rows) {
-    const createdRaw = r._created_raw || r["Created At (UTC)"] || r["Created At"] || r["created_at"] || r._created;
+    const createdRaw = (options.fromCache && r._created) ? r._created : (r["Created At (UTC)"] || r["Created At"] || r["created_at"] || r._created_raw || r._created);
     const createdDt = parseStrictUTCDate(createdRaw);
     if (!createdDt) continue;
 
-    const updatedRaw = r._updated_raw || r["Updated At (UTC)"] || r["Updated At"] || r["updated_at"] || r._updated;
+    const updatedRaw = (options.fromCache && r._updated) ? r._updated : (r["Updated At (UTC)"] || r["Updated At"] || r["updated_at"] || r._updated_raw || r._updated);
     const updatedDt = parseStrictUTCDate(updatedRaw) || createdDt;
 
     const type = String(r.Type || r.type || "").trim();
@@ -3415,9 +3921,19 @@ function renderGeneralView(m) {
   const avgOp = totalOps ? (commTotalUSDC / totalOps) : 0;
   const dailyPace = m.activeDays ? (commTotalUSDC / m.activeDays) : 0;
 
-  const bizumOps = m.current.filter(x => (x["Payment Method"] || "").toLowerCase().includes("bizum"));
+  const latestMonthKey = (m.completed[0] && m.completed[0].Periodo_Key) || "";
+  const bizumScopeOps = (currentGranularity === "Mensual") ? m.current : m.completed.filter(x => x.Periodo_Key === latestMonthKey);
+  const bizumOps = bizumScopeOps.filter(x => (x["Payment Method"] || "").toLowerCase().includes("bizum"));
   const bizumRecibidos = bizumOps.filter(x => x.Type === "Retirar").length;
   const bizumEnviosVol = bizumOps.filter(x => x.Type === "Agregar").reduce((s, x) => s + num(x["Funds To Send Amount"]), 0);
+  const bizumRecPct = Math.min(100, (bizumRecibidos / 60) * 100);
+  const bizumEnvPct = Math.min(100, (bizumEnviosVol / 5000) * 100);
+  const bizumRecLeft = Math.max(0, 60 - bizumRecibidos);
+  const bizumEnvLeft = Math.max(0, 5000 - bizumEnviosVol);
+  const bizumRecClass = bizumRecPct >= 90 ? "red" : (bizumRecPct >= 70 ? "orange" : "green");
+  const bizumEnvClass = bizumEnvPct >= 90 ? "red" : (bizumEnvPct >= 70 ? "orange" : "green");
+  const bizumRecColor = bizumRecPct >= 90 ? "var(--red)" : (bizumRecPct >= 70 ? "var(--orange)" : "var(--green)");
+  const bizumEnvColor = bizumEnvPct >= 90 ? "var(--red)" : (bizumEnvPct >= 70 ? "var(--orange)" : "var(--green)");
 
   const pctEUR = commTotalUSDC > 0 ? (m.commEUR_USDC / commTotalUSDC) * 100 : 90.8;
   const pctPEN = commTotalUSDC > 0 ? (m.commPEN_USDC / commTotalUSDC) * 100 : 9.2;
@@ -3475,17 +3991,6 @@ function renderGeneralView(m) {
       </div>
     </div>
 
-    <!-- BARRA COMPACTA DE MODO OPERATIVO Y HORA -->
-    <div class="context-bar-compact">
-      <div class="context-bar-item">
-        <span>🕐 <b>Hora:</b> <span style="color:var(--blue);font-weight:700">UTC (Exacta CSV)</span></span>
-      </div>
-      <div class="context-bar-item">
-        <span>🛡️ <b>Modo:</b> <span style="color:${onlyAcceptorMode ? 'var(--green)' : 'var(--orange)'};font-weight:700">${onlyAcceptorMode ? 'Solo Cajero P2P' : 'Todas (+' + (metricIndex.personalClientOps?.length || 0) + ' pers.)'}</span></span>
-        <button class="apple-btn" onclick="toggleAcceptorMode()" style="padding:3px 9px;font-size:10px;border-radius:8px">${onlyAcceptorMode ? 'Incluir Personales' : 'Solo Modo Cajero'}</button>
-      </div>
-    </div>
-
     <!-- SUB-BARRA OPERATIVA -->
     <div class="subkpi-row">
       <div class="subkpi-card">
@@ -3506,17 +4011,19 @@ function renderGeneralView(m) {
         <div class="subkpi-val" id="subkpi-daily-pace">$${dailyPace.toFixed(2)}</div>
         <div class="subkpi-note">${m.activeDays} días activos</div>
       </div>
-      <div class="subkpi-card">
+      <div class="subkpi-card" title="Límite operativo mensual de recepción por Bizum (60 operaciones)">
         <div class="subkpi-icon">📥</div>
         <div class="subkpi-label">BIZUM RECIBIDOS</div>
-        <div class="subkpi-val" id="subkpi-bizum-in">${bizumRecibidos} / 60 <span style="font-size:10px;font-weight:400">ops</span></div>
-        <div class="subkpi-note green">${((bizumRecibidos/60)*100).toFixed(1)}% del límite mensual</div>
+        <div class="subkpi-val" id="subkpi-bizum-in" style="color:${bizumRecColor}">${bizumRecibidos} / 60 <span style="font-size:10px;font-weight:400">ops</span></div>
+        <div class="bizum-mini-bar"><div class="bizum-mini-fill" style="width:${bizumRecPct}%;background:${bizumRecColor}"></div></div>
+        <div class="subkpi-note ${bizumRecClass}">Libres: <b>${bizumRecLeft} ops</b> (${bizumRecPct.toFixed(0)}%)</div>
       </div>
-      <div class="subkpi-card">
+      <div class="subkpi-card" title="Cupo operativo mensual de envío por Bizum (€5.000)">
         <div class="subkpi-icon">📤</div>
         <div class="subkpi-label">BIZUM ENVÍOS</div>
-        <div class="subkpi-val" id="subkpi-bizum-out">€${bizumEnviosVol.toFixed(0)} / 5k €</div>
-        <div class="subkpi-note green">${((bizumEnviosVol/5000)*100).toFixed(1)}% del cupo mensual</div>
+        <div class="subkpi-val" id="subkpi-bizum-out" style="color:${bizumEnvColor}">€${bizumEnviosVol.toFixed(0)} / 5k €</div>
+        <div class="bizum-mini-bar"><div class="bizum-mini-fill" style="width:${bizumEnvPct}%;background:${bizumEnvColor}"></div></div>
+        <div class="subkpi-note ${bizumEnvClass}">Libre: <b>€${bizumEnvLeft.toFixed(0)}</b> (${bizumEnvPct.toFixed(0)}%)</div>
       </div>
     </div>
 
@@ -3612,49 +4119,67 @@ function renderGeneralView(m) {
         <div class="chart-header"><div class="chart-title">⚡ Actividad Reciente (5 últimas)</div></div>
         <div class="recent-list" id="recentListGeneral"></div>
       </div>
-      <div class="chart-box-card" style="margin-bottom:0">
-        <div class="chart-header">
-          <div class="chart-title">🍩 Distribución por Método</div>
-          <span style="font-size:10px;color:var(--muted);font-weight:600">${totalOps} ops · $${commTotalUSDC.toFixed(2)}</span>
+      <div class="chart-box-card donut-card-v3" style="margin-bottom:0">
+        <div class="chart-header" style="margin-bottom:6px">
+          <div>
+            <div class="chart-title">🍩 Distribución por Método</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px">Toca un método para filtrar la tabla inferior · ${totalOps} ops ($${commTotalUSDC.toFixed(2)})</div>
+          </div>
+          <div class="apple-segmented">
+            <button type="button" class="${donutChartMetric === 'OPS' ? 'active' : ''}" onclick="switchDonutMetric('OPS')">Por Ops</button>
+            <button type="button" class="${donutChartMetric === 'GAIN' ? 'active' : ''}" onclick="switchDonutMetric('GAIN')">Por Ganancia ($)</button>
+          </div>
         </div>
         <div class="exec-donut-layout">
           <div class="exec-donut-canvas-box">
             <canvas id="donutChartCanvas"></canvas>
             <div class="exec-donut-center">
-              <div class="exec-donut-center-val" id="donutCenterOps">${totalOps}</div>
-              <div class="exec-donut-center-lbl">OPERACIONES</div>
-              <div class="exec-donut-center-sub" id="donutCenterGain">+$${commTotalUSDC.toFixed(2)}</div>
+              <div class="exec-donut-center-val" id="donutCenterOps">${donutChartMetric === 'OPS' ? totalOps : '$' + commTotalUSDC.toFixed(0)}</div>
+              <div class="exec-donut-center-lbl" id="donutCenterLbl">${donutChartMetric === 'OPS' ? 'OPERACIONES' : 'GANANCIA USDC'}</div>
+              <div class="exec-donut-center-sub" id="donutCenterGain">${donutChartMetric === 'OPS' ? '+$' + commTotalUSDC.toFixed(2) + ' USDC' : totalOps + ' operaciones'}</div>
             </div>
           </div>
           <div class="exec-donut-legend" id="donutCustomLegend"></div>
         </div>
+        <div class="donut-summary-footer" id="donutSummaryFooter"></div>
       </div>
     </div>
 
     <!-- TABLA CONSOLIDADA -->
     <div class="table-card" style="margin-top:16px">
       <div class="table-header-row">
-        <div style="font-size:14px;font-weight:750">📋 Historial Consolidado de Operaciones</div>
-        <div style="display:flex;gap:8px">
-          <button class="apple-btn" onclick="exportCSVReport()">📊 Descargar en CSV</button>
-          <button class="apple-btn" onclick="printReport()">📄 Exportar a PDF</button>
+        <div>
+          <div style="font-size:14px;font-weight:750;display:flex;align-items:center;gap:8px">
+            <span>📋 Historial Consolidado de Operaciones</span>
+            <span id="tableCountBadge" style="font-size:10px;padding:2px 8px;border-radius:999px;background:var(--surface-sub);border:1px solid var(--glass-border);color:var(--blue);font-family:var(--font-mono)">${totalOps} ops</span>
+          </div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">Importes con divisa explícita según sentido de la operación (Agregar: Fiat → USDC | Retirar: USDC → Fiat)</div>
+        </div>
+        <div class="table-controls-bar">
+          <input type="text" id="consolidatedSearchInput" class="table-search-input" placeholder="🔍 Buscar método, monto, divisa o fecha..." oninput="filterConsolidatedTable()">
+          <select id="consolidatedTypeFilter" onchange="filterConsolidatedTable()" style="height:32px;padding:0 24px 0 10px;font-size:11px;font-weight:600;border-radius:10px">
+            <option value="ALL">Todos los tipos</option>
+            <option value="Agregar">↓ Solo Agregar</option>
+            <option value="Retirar">↑ Solo Retirar</option>
+          </select>
+          <button class="apple-btn" onclick="exportCSVReport()">📊 CSV</button>
+          <button class="apple-btn" onclick="printReport()">📄 PDF</button>
         </div>
       </div>
       <div class="table-scroll">
         <table class="apple-data-table">
           <thead>
             <tr>
-              <th>CREATED AT (${timezoneMode})</th>
-              <th>MONEDA_OP</th>
-              <th>TYPE</th>
-              <th>PAYMENT METHOD</th>
-              <th>FUNDS TO SEND AMOUNT</th>
-              <th>FUNDS TO RECEIVE AMOUNT</th>
-              <th>PEER COMMISSION</th>
-              <th>COMISION_FIJA_USD</th>
-              <th>GANANCIA_TOTAL_USDC</th>
-              <th>SERVICE FEE</th>
-              <th>EXCHANGE RATE</th>
+              <th>FECHA Y HORA (${getTzLabel(timezoneMode)})</th>
+              <th>ZONA</th>
+              <th>OPERACIÓN</th>
+              <th>MÉTODO DE PAGO</th>
+              <th style="text-align:right">FONDOS ENVIADOS (TÚ ENVÍAS)</th>
+              <th style="text-align:right">FONDOS RECIBIDOS (TÚ RECIBES)</th>
+              <th style="text-align:right">COMISIÓN VARIABLE</th>
+              <th style="text-align:right">TARIFA FIJA</th>
+              <th style="text-align:right">GANANCIA NETA</th>
+              <th style="text-align:right">TASA / TC</th>
             </tr>
           </thead>
           <tbody id="consolidatedTableBody"></tbody>
@@ -3689,75 +4214,167 @@ function renderGeneralView(m) {
   runRouletteAnimation($("#proj-margin-vol"), m.marginOverVol.toFixed(2), "", "%");
 }
 
+function resolveOpCurrencies(op) {
+  const isAdd = op.Type === "Agregar";
+  const zoneCur = (op.Moneda_Op && op.Moneda_Op !== "USDC") ? op.Moneda_Op : "EUR";
+  const rawSendCur = String(op["Funds To Send Currency"] || "").trim().toUpperCase();
+  const rawRecCur = String(op["Funds To Receive Currency"] || "").trim().toUpperCase();
+  const sendCur = rawSendCur || (isAdd ? zoneCur : "USDC");
+  const recCur = rawRecCur || (isAdd ? "USDC" : zoneCur);
+  return { isAdd, zoneCur, sendCur, recCur };
+}
+
+function formatAmountWithBadge(amount, currency, includeBadge = true) {
+  const c = (currency || "USDC").toUpperCase();
+  const valStr = num(amount).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  if (!includeBadge) {
+    if (c === "EUR") return `€${valStr} EUR`;
+    if (c === "PEN") return `S/. ${valStr} PEN`;
+    return `$${valStr} USDC`;
+  }
+  if (c === "EUR") {
+    return `<span class="tbl-amt-cell"><span>€${valStr}</span><span class="tbl-cur-tag eur">EUR</span></span>`;
+  }
+  if (c === "PEN") {
+    return `<span class="tbl-amt-cell"><span>S/. ${valStr}</span><span class="tbl-cur-tag pen">PEN</span></span>`;
+  }
+  return `<span class="tbl-amt-cell"><span>$${valStr}</span><span class="tbl-cur-tag usdc">${c}</span></span>`;
+}
+
 function renderRecentList(ops) {
   const container = $("#recentListGeneral");
   if (!container) return;
   container.innerHTML = "";
-  ops.forEach(op => {
-    const isAdd = op.Type === "Agregar";
-    const sendAmt = num(op["Funds To Send Amount"]);
-    const sendCur = op["Funds To Send Currency"] || (op.Moneda_Op === "EUR" ? (isAdd ? "EUR" : "USDC") : (isAdd ? "PEN" : "USDC"));
-    const recAmt = num(op["Funds To Receive Amount"]);
-    const recCur = op["Funds To Receive Currency"] || (op.Moneda_Op === "EUR" ? (isAdd ? "USDC" : "EUR") : (isAdd ? "USDC" : "PEN"));
+  const rateEur = metricIndex.rate?.eur || 0.893;
 
-    const formatCurSymbol = (amt, cur) => {
+  ops.forEach(op => {
+    const { isAdd, zoneCur, sendCur, recCur } = resolveOpCurrencies(op);
+    const sendAmt = num(op["Funds To Send Amount"]);
+    const recAmt = num(op["Funds To Receive Amount"]);
+    const peerComm = num(op["Peer Commission"]);
+    const fixedFee = num(op.Comision_Fija_USD);
+    const totalGain = num(op.Ganancia_Total_USDC);
+    const gainEur = totalGain * rateEur;
+    const tcVal = num(op["Exchange Rate"] || op.Net_Exchange_Rate || (isAdd ? (recAmt > 0 ? sendAmt / recAmt : 0) : (sendAmt > 0 ? recAmt / sendAmt : 0)));
+
+    const fmtPill = (amt, cur) => {
       const c = (cur || "").toUpperCase();
-      const valStr = amt.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      if (c === "EUR") return `€${valStr}`;
-      if (c === "PEN") return `S/. ${valStr}`;
-      if (c === "USDC" || c === "USD") return `$${valStr} USDC`;
-      return `${valStr} ${c}`;
+      const v = amt.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const cls = c === "EUR" ? "eur" : (c === "PEN" ? "pen" : "usdc");
+      const sym = c === "EUR" ? "€" : (c === "PEN" ? "S/. " : "$");
+      return `<span class="rc2-pill-amt ${cls}">${sym}${v} <small style="opacity:0.8">${c}</small></span>`;
     };
 
-    const sendFormatted = formatCurSymbol(sendAmt, sendCur);
-    const recFormatted = formatCurSymbol(recAmt, recCur);
+    const sendActionLbl = "Env:";
+    const recActionLbl = "Rec:";
+    const tcUnit = zoneCur === "PEN" ? "S/./$" : "€/$";
 
     const div = document.createElement("div");
-    div.className = "recent-item";
+    div.className = "recent-card-v2";
     div.innerHTML = `
-      <div class="recent-item-left" style="width:100%">
-        <div class="op-arrow-badge ${isAdd ? 'add' : 'ret'}" style="flex-shrink:0">${isAdd ? '↓' : '↑'}</div>
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-            <div style="font-weight:700;display:flex;align-items:center;gap:6px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
-              <span>${op["Payment Method"]}</span>
+      <div class="rc2-top">
+        <div class="rc2-identity">
+          <div class="rc2-icon ${isAdd ? 'add' : 'ret'}" title="${isAdd ? 'Agregar (Compras USDC enviando Fiat)' : 'Retirar (Vendes USDC recibiendo Fiat)'}">${isAdd ? '↓' : '↑'}</div>
+          <div class="rc2-title-wrap">
+            <div class="rc2-method-row">
+              <span class="rc2-method">${op["Payment Method"]}</span>
               <span class="badge-tag ${isAdd ? 'badge-add' : 'badge-ret'}">${op.Type}</span>
+              <span class="tbl-cur-tag ${zoneCur === 'PEN' ? 'pen' : 'eur'}">${zoneCur}</span>
             </div>
-            <div style="font-family:var(--font-mono);font-weight:800;color:var(--green);font-size:12px;flex-shrink:0">+$${op.Ganancia_Total_USDC.toFixed(2)}</div>
-          </div>
-          <div class="recent-item-meta-row">
-            <span class="recent-item-date">${formatDisplayDate(op._created, true)}</span>
-            <span class="recent-item-flow"><span style="color:var(--muted)">Env:</span> <b>${sendFormatted}</b> <span style="opacity:0.45">→</span> <span style="color:var(--muted)">Rec:</span> <b>${recFormatted}</b></span>
+            <div class="rc2-time">
+              <span>🗓 ${formatDisplayDate(op._created, true)}</span>
+              ${op.Duracion_Min > 0 ? `<span>· ⏱ ${op.Duracion_Min.toFixed(0)}m</span>` : ''}
+            </div>
           </div>
         </div>
+        <div class="rc2-profit-box">
+          <div class="rc2-profit-val">+$${totalGain.toFixed(2)} <span style="font-size:10px;font-weight:700">USDC</span></div>
+          <div class="rc2-profit-sub">≈ €${gainEur.toFixed(2)} · ($${peerComm.toFixed(2)} + $${fixedFee.toFixed(2)})</div>
+        </div>
+      </div>
+      <div class="rc2-flow-bar">
+        <div class="rc2-flow-steps">
+          <span style="color:var(--muted);font-size:9.5px">${sendActionLbl}:</span>
+          ${fmtPill(sendAmt, sendCur)}
+          <span style="color:var(--muted);font-weight:800">→</span>
+          <span style="color:var(--muted);font-size:9.5px">${recActionLbl}:</span>
+          ${fmtPill(recAmt, recCur)}
+        </div>
+        ${tcVal > 0 ? `<span class="rc2-rate-tag">TC: <b>${tcVal.toFixed(3)}</b> ${tcUnit}</span>` : ''}
       </div>
     `;
     container.appendChild(div);
   });
 }
 
+let currentTableOps = [];
+
 function renderConsolidatedTable(ops) {
+  currentTableOps = ops || [];
+  filterConsolidatedTable();
+}
+
+window.filterConsolidatedTable = function() {
   const tbody = $("#consolidatedTableBody");
   if (!tbody) return;
+  const q = ($("#consolidatedSearchInput")?.value || "").trim().toLowerCase();
+  const tFilter = $("#consolidatedTypeFilter")?.value || "ALL";
+
+  const filtered = currentTableOps.filter(r => {
+    if (tFilter !== "ALL" && r.Type !== tFilter) return false;
+    if (!q) return true;
+    const { sendCur, recCur, zoneCur } = resolveOpCurrencies(r);
+    const dateStr = formatDisplayDate(r._created, true).toLowerCase();
+    const methodStr = String(r["Payment Method"] || "").toLowerCase();
+    const typeStr = String(r.Type || "").toLowerCase();
+    const sendStr = num(r["Funds To Send Amount"]).toFixed(2);
+    const recStr = num(r["Funds To Receive Amount"]).toFixed(2);
+    const gainStr = num(r.Ganancia_Total_USDC).toFixed(2);
+    return (
+      dateStr.includes(q) ||
+      methodStr.includes(q) ||
+      typeStr.includes(q) ||
+      zoneCur.toLowerCase().includes(q) ||
+      sendCur.toLowerCase().includes(q) ||
+      recCur.toLowerCase().includes(q) ||
+      sendStr.includes(q) ||
+      recStr.includes(q) ||
+      gainStr.includes(q)
+    );
+  });
+
+  const badge = $("#tableCountBadge");
+  if (badge) badge.textContent = `${filtered.length} ops`;
+
   tbody.innerHTML = "";
-  ops.forEach(r => {
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="10" style="text-align:center;padding:24px;color:var(--muted)">No se encontraron operaciones con ese filtro</td></tr>`;
+    return;
+  }
+
+  filtered.forEach(r => {
+    const { isAdd, zoneCur, sendCur, recCur } = resolveOpCurrencies(r);
+    const sendAmt = num(r["Funds To Send Amount"]);
+    const recAmt = num(r["Funds To Receive Amount"]);
+    const tcVal = num(r["Exchange Rate"] || r.Net_Exchange_Rate || (isAdd ? (recAmt > 0 ? sendAmt / recAmt : 0) : (sendAmt > 0 ? recAmt / sendAmt : 0)));
+    const tcSuffix = zoneCur === "PEN" ? "S/./$" : "€/$";
+
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${formatDisplayDate(r._created, true)}</td>
-      <td><b>${r.Moneda_Op}</b></td>
-      <td><span class="badge-tag ${r.Type === 'Agregar' ? 'badge-add' : 'badge-ret'}">${r.Type}</span></td>
-      <td>${r["Payment Method"]}</td>
-      <td>${r["Funds To Send Amount"].toLocaleString('es-ES', {minimumFractionDigits: 2})}</td>
-      <td>${r["Funds To Receive Amount"].toLocaleString('es-ES', {minimumFractionDigits: 2})}</td>
-      <td>${r["Peer Commission"].toFixed(2)}</td>
-      <td>${r.Comision_Fija_USD.toFixed(2)}</td>
-      <td style="color:var(--green);font-weight:750">${r.Ganancia_Total_USDC.toFixed(2)}</td>
-      <td>${r["Service Fee"].toFixed(2)}</td>
-      <td>${num(r["Exchange Rate"] || r.Net_Exchange_Rate || 0.88).toFixed(2)}</td>
+      <td><span class="tbl-cur-tag ${zoneCur === 'PEN' ? 'pen' : 'eur'}">${zoneCur}</span></td>
+      <td><span class="badge-tag ${isAdd ? 'badge-add' : 'badge-ret'}">${isAdd ? '↓ ' : '↑ '}${r.Type}</span></td>
+      <td><b>${r["Payment Method"]}</b></td>
+      <td style="text-align:right">${formatAmountWithBadge(sendAmt, sendCur)}</td>
+      <td style="text-align:right">${formatAmountWithBadge(recAmt, recCur)}</td>
+      <td style="text-align:right;color:var(--text-secondary)">$${num(r["Peer Commission"]).toFixed(2)} <small style="color:var(--muted)">USDC</small></td>
+      <td style="text-align:right;color:var(--text-secondary)">$${num(r.Comision_Fija_USD).toFixed(2)} <small style="color:var(--muted)">USDC</small></td>
+      <td style="text-align:right;color:var(--green);font-weight:800">+$${num(r.Ganancia_Total_USDC).toFixed(2)} <small>USDC</small></td>
+      <td style="text-align:right;color:var(--muted)">${tcVal > 0 ? `${tcVal.toFixed(3)} <small>${tcSuffix}</small>` : '—'}</td>
     `;
     tbody.appendChild(tr);
   });
-}
+};
 
 function initMainChart(m) {
   const canvas = $("#mainChartCanvas");
@@ -3770,65 +4387,81 @@ function initMainChart(m) {
 
   let labels = [];
   let barData = [];
+  let opsCountData = [];
 
   if (currentGranularity === "Anual") {
     const monthGain = Array(12).fill(0);
+    const monthOps = Array(12).fill(0);
     m.current.forEach(x => {
       const idx = x.Mes_Num - 1;
       if (idx >= 0 && idx < 12) {
         monthGain[idx] += (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+        monthOps[idx] += 1;
       }
     });
     labels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
     barData = monthGain.map(v => +v.toFixed(2));
+    opsCountData = monthOps;
   } else if (currentGranularity === "Trimestral") {
     const qMonths = {};
     m.current.forEach(x => {
       const k = x.Mes_Eje || MESES_CORTOS[x.Mes_Num];
-      qMonths[k] = (qMonths[k] || 0) + (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+      if (!qMonths[k]) qMonths[k] = { val: 0, ops: 0 };
+      qMonths[k].val += (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+      qMonths[k].ops += 1;
     });
     labels = Object.keys(qMonths);
     if (!labels.length) labels = ["Mes 1", "Mes 2", "Mes 3"];
-    barData = labels.map(k => +(qMonths[k] || 0).toFixed(2));
+    barData = labels.map(k => +(qMonths[k]?.val || 0).toFixed(2));
+    opsCountData = labels.map(k => qMonths[k]?.ops || 0);
   } else if (currentGranularity === "Histórico") {
     const histBuckets = {};
     m.current.forEach(x => {
       const k = x.Periodo_Key;
-      if (!histBuckets[k]) histBuckets[k] = { label: x.Mes_Eje, val: 0 };
+      if (!histBuckets[k]) histBuckets[k] = { label: x.Mes_Eje, val: 0, ops: 0 };
       histBuckets[k].val += (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+      histBuckets[k].ops += 1;
     });
     const sortedKeys = Object.keys(histBuckets).sort();
     labels = sortedKeys.map(k => histBuckets[k].label || k);
     barData = sortedKeys.map(k => +histBuckets[k].val.toFixed(2));
+    opsCountData = sortedKeys.map(k => histBuckets[k].ops);
   } else if (currentGranularity === "Rango") {
     const dayMap = {};
     m.current.forEach(x => {
       const k = formatDisplayDate(x._created);
-      dayMap[k] = (dayMap[k] || 0) + (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+      if (!dayMap[k]) dayMap[k] = { val: 0, ops: 0 };
+      dayMap[k].val += (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+      dayMap[k].ops += 1;
     });
     labels = Object.keys(dayMap);
-    barData = labels.map(k => +dayMap[k].toFixed(2));
+    barData = labels.map(k => +dayMap[k].val.toFixed(2));
+    opsCountData = labels.map(k => dayMap[k].ops);
   } else if (currentGranularity === "Mensual" && $("#day")?.value && $("#day").value !== "Todos") {
-    // Vista Intradía Orden por Orden en orden cronológico (de la primera operación del día a la última)
     const chronoOps = [...m.current].sort((a, b) => a._created - b._created);
     labels = chronoOps.map((op, i) => {
-      const hh = String(op._created.getUTCHours()).padStart(2, "0");
-      const mm = String(op._created.getUTCMinutes()).padStart(2, "0");
+      const cOp = getDateComponentsInTz(op._created, timezoneMode);
+      const hh = String(cOp.hour).padStart(2, "0");
+      const mm = String(cOp.minute).padStart(2, "0");
       const shortMet = (op["Payment Method"] || "").split(" ")[0];
       return `${hh}:${mm} · ${shortMet}`;
     });
     barData = chronoOps.map(op => +(mainChartCurrency === "USDC" ? op.Ganancia_Total_USDC : op.Ganancia_Total_USDC * m.rate.eur).toFixed(2));
+    opsCountData = chronoOps.map(() => 1);
     canvas._intradayOps = chronoOps;
   } else {
     canvas._intradayOps = null;
     const dayBuckets = {};
     m.current.forEach(x => {
       const d = x.Dia;
-      dayBuckets[d] = (dayBuckets[d] || 0) + (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+      if (!dayBuckets[d]) dayBuckets[d] = { val: 0, ops: 0 };
+      dayBuckets[d].val += (mainChartCurrency === "USDC" ? x.Ganancia_Total_USDC : x.Ganancia_Total_USDC * m.rate.eur);
+      dayBuckets[d].ops += 1;
     });
     const sortedDays = Object.keys(dayBuckets).map(Number).sort((a,b) => a - b);
     labels = sortedDays.map(d => `D${d}`);
-    barData = sortedDays.map(d => +dayBuckets[d].toFixed(2));
+    barData = sortedDays.map(d => +dayBuckets[d].val.toFixed(2));
+    opsCountData = sortedDays.map(d => dayBuckets[d].ops);
   }
 
   let runAcc = 0;
@@ -3845,6 +4478,44 @@ function initMainChart(m) {
       chartInner.style.width = "100%";
     }
   }
+
+  const updateMainInspectBanner = (idx) => {
+    const badge = $("#chartTouchInspectBadge");
+    if (!badge || idx === null || idx === undefined || idx < 0 || idx >= labels.length) return;
+    const dLabel = labels[idx];
+    const gVal = barData[idx]?.toFixed(2) ?? "0.00";
+    const aVal = lineData[idx]?.toFixed(2) ?? "0.00";
+    const oCnt = opsCountData[idx] || 0;
+    const intra = canvas._intradayOps && canvas._intradayOps[idx];
+    badge.className = "chart-inspect-pill";
+    badge.style.display = "flex";
+
+    if (intra) {
+      const { sendCur, recCur } = resolveOpCurrencies(intra);
+      badge.innerHTML = `
+        <div class="chart-inspect-metrics">
+          <span>⏱️ <b>Orden #${idx + 1}</b> (${formatDisplayDate(intra._created, true)})</span>
+          <span>· <b>${intra["Payment Method"]}</b> (${intra.Type})</span>
+          <span style="color:#1d8cf8;font-weight:800">Ganancia: ${sym}${gVal}</span>
+          <span style="color:#ff9500;font-weight:800">Acum: ${sym}${aVal}</span>
+          <span style="color:var(--muted)">(${num(intra["Funds To Send Amount"]).toFixed(2)} ${sendCur} → ${num(intra["Funds To Receive Amount"]).toFixed(2)} ${recCur})</span>
+        </div>
+        <button type="button" class="chart-inspect-open-btn" onclick="selectVisualDay('Todos')">← Volver al Mes</button>
+      `;
+    } else {
+      const isDayBar = currentGranularity === "Mensual" && /^D\d+$/.test(dLabel);
+      const dayNumber = isDayBar ? dLabel.replace("D", "") : null;
+      const fullDateLabel = isDayBar ? `Día ${dayNumber}` : dLabel;
+      badge.innerHTML = `
+        <div class="chart-inspect-metrics">
+          <span>📅 <b>${fullDateLabel}</b> <span style="color:var(--muted)">(${oCnt} ${oCnt === 1 ? 'op' : 'ops'})</span></span>
+          <span style="color:#1d8cf8;font-weight:800">Gan: ${sym}${gVal}</span>
+          <span style="color:#ff9500;font-weight:800">Acum: ${sym}${aVal}</span>
+        </div>
+        ${isDayBar ? `<button type="button" class="chart-inspect-open-btn" onclick="selectVisualDay('${dayNumber}')">Ver D${dayNumber} →</button>` : ''}
+      `;
+    }
+  };
 
   const dataLabelsPlugin = {
     id: "barDataLabels",
@@ -3879,10 +4550,16 @@ function initMainChart(m) {
           } else {
             ctx.textAlign = "center";
             ctx.textBaseline = "bottom";
-            ctx.font = `750 ${isMobile ? 10 : 11}px -apple-system, "SF Mono", monospace`;
+            ctx.font = `800 ${isMobile ? 9.5 : 10.5}px -apple-system, "SF Mono", monospace`;
+            const linePt = metaLine.data[index];
+            let labelY = bar.y - 4;
+            if (linePt && Math.abs(linePt.y - labelY) < 15) {
+              labelY = Math.min(bar.y - 4, linePt.y - 10);
+            }
             ctx.fillStyle = isDark ? "#ffffff" : "#1d1d1f";
-            ctx.shadowColor = "transparent";
-            ctx.fillText(text, bar.x, bar.y - 3);
+            ctx.shadowColor = isDark ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.9)";
+            ctx.shadowBlur = 3;
+            ctx.fillText(text, bar.x, Math.max(12, labelY));
           }
         }
       });
@@ -3909,6 +4586,7 @@ function initMainChart(m) {
           label: `Ganancia (${sym})`,
           data: barData,
           backgroundColor: isDark ? "#2997ff" : "#1d8cf8",
+          hoverBackgroundColor: "#00c7be",
           borderRadius: 999,
           borderSkipped: false,
           maxBarThickness: isMobile ? 32 : 44,
@@ -3921,12 +4599,12 @@ function initMainChart(m) {
           label: `Acumulado (${sym})`,
           data: lineData,
           borderColor: "#ff9500",
-          borderWidth: isMobile ? 2.0 : 3.4,
+          borderWidth: isMobile ? 2.2 : 3.4,
           pointBackgroundColor: "#ffffff",
           pointBorderColor: "#ff9500",
-          pointBorderWidth: isMobile ? 1.0 : 3.2,
-          pointRadius: isMobile ? 2.0 : 6.5,
-          pointHoverRadius: isMobile ? 4.5 : 8.5,
+          pointBorderWidth: isMobile ? 1.5 : 3.2,
+          pointRadius: isMobile ? 2.5 : 6.5,
+          pointHoverRadius: isMobile ? 5.5 : 8.5,
           tension: 0.28,
           yAxisID: "y1"
         }
@@ -3976,29 +4654,37 @@ function initMainChart(m) {
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: isDark ? "rgba(20,24,35,0.96)" : "rgba(255,255,255,0.96)",
+          enabled: !isMobile,
+          backgroundColor: isDark ? "rgba(16, 20, 31, 0.96)" : "rgba(255, 255, 255, 0.98)",
           titleColor: isDark ? "#ffffff" : "#1d1d1f",
-          bodyColor: isDark ? "#c5c5c9" : "#424245",
-          borderColor: isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)",
-          borderWidth: 1,
-          padding: 10,
+          bodyColor: isDark ? "#e5e5ea" : "#1d1d1f",
+          borderColor: isDark ? "rgba(41, 151, 255, 0.4)" : "rgba(0, 113, 227, 0.3)",
+          borderWidth: 1.2,
+          cornerRadius: 12,
+          padding: 11,
           callbacks: {
             title: items => {
               if (!items.length) return "";
               const idx = items[0].dataIndex;
               const intra = canvas._intradayOps && canvas._intradayOps[idx];
               if (intra) {
-                return `Orden #${idx + 1} · ${formatDisplayDate(intra._created, true)} UTC`;
+                return `⏱️ Orden #${idx + 1} · ${formatDisplayDate(intra._created, true)} (${getTzLabel(timezoneMode)})`;
               }
-              return items[0].label;
+              const lbl = items[0].label;
+              const cnt = opsCountData[idx] || 0;
+              if (currentGranularity === "Mensual" && /^D\d+$/.test(lbl)) {
+                return `📅 Día ${lbl.replace("D", "")} · ${m.current[0]?.Periodo_Label || ''} (${cnt} ${cnt === 1 ? 'op' : 'ops'})`;
+              }
+              return `📅 ${lbl} (${cnt} ${cnt === 1 ? 'operación' : 'operaciones'})`;
             },
             label: c => {
               const idx = c.dataIndex;
               const intra = canvas._intradayOps && canvas._intradayOps[idx];
               if (intra && c.datasetIndex === 0) {
-                return ` ${intra["Payment Method"]} (${intra.Type}): ${sym}${c.raw} (Env: ${intra["Funds To Send Amount"]} ${intra["Funds To Send Currency"]})`;
+                const { sendCur, recCur } = resolveOpCurrencies(intra);
+                return ` ${intra["Payment Method"]} (${intra.Type}): +${sym}${Number(c.raw).toFixed(2)} | ${num(intra["Funds To Send Amount"]).toFixed(2)} ${sendCur} → ${num(intra["Funds To Receive Amount"]).toFixed(2)} ${recCur}`;
               }
-              return ` ${c.dataset.label}: ${sym}${c.raw}`;
+              return ` ${c.dataset.label}: ${sym}${Number(c.raw).toFixed(2)}`;
             }
           }
         }
@@ -4007,31 +4693,80 @@ function initMainChart(m) {
         if (!activeElements || !activeElements.length) return;
         const idx = activeElements[0].index;
         const lbl = labels[idx] || "";
+        updateMainInspectBanner(idx);
+
+        if (canvas._longPressConsumed) {
+          canvas._longPressConsumed = false;
+          return;
+        }
+
+        const now = performance.now();
         if (currentGranularity === "Mensual" && /^D\d+$/.test(lbl)) {
-          const dayNum = lbl.replace("D", "");
-          selectVisualDay(dayNum);
+          if (canvas._lastTapIdx === idx && (now - (canvas._lastTapTime || 0)) < 380) {
+            const dayNum = lbl.replace("D", "");
+            canvas._lastTapIdx = null;
+            selectVisualDay(dayNum);
+          } else {
+            canvas._lastTapIdx = idx;
+            canvas._lastTapTime = now;
+          }
         }
       },
       onHover: (evt, activeElements) => {
-        const badge = $("#chartTouchInspectBadge");
-        if (!badge) return;
         if (activeElements && activeElements.length > 0) {
-          const idx = activeElements[0].index;
-          const dLabel = labels[idx];
-          const gVal = barData[idx];
-          const aVal = lineData[idx];
-          const intra = canvas._intradayOps && canvas._intradayOps[idx];
-          badge.style.display = "block";
-          if (intra) {
-            badge.innerHTML = `<span>⏱️ Orden #${idx + 1} (${dLabel} · ${intra.Type}):</span> <span style="color:#1d8cf8">Ganancia ${sym}${gVal}</span> · <span style="color:#ff9500">Acumulado Día ${sym}${aVal}</span>`;
-          } else {
-            badge.innerHTML = `<span>📅 ${dLabel}:</span> <span style="color:#1d8cf8">Ganancia ${sym}${gVal}</span> · <span style="color:#ff9500">Acumulado ${sym}${aVal}</span> <span style="opacity:0.65;font-size:9.5px">(Toca una barra para ver el detalle del día)</span>`;
-          }
+          updateMainInspectBanner(activeElements[0].index);
         }
       }
     },
     plugins: [dataLabelsPlugin]
   });
+
+  if (!canvas._longPressBound) {
+    canvas._longPressBound = true;
+    let lpTimer = null;
+    let startX = 0, startY = 0;
+
+    canvas.addEventListener("touchstart", e => {
+      if (currentGranularity !== "Mensual" || ($("#day")?.value && $("#day").value !== "Todos")) return;
+      const t = e.touches && e.touches[0];
+      if (!t || !charts.main) return;
+      startX = t.clientX;
+      startY = t.clientY;
+      const elements = charts.main.getElementsAtEventForMode(e, "index", { intersect: false }, true);
+      if (!elements || !elements.length) return;
+      const idx = elements[0].index;
+      const lbl = charts.main.data.labels[idx] || "";
+      if (!/^D\d+$/.test(lbl)) return;
+
+      updateMainInspectBanner(idx);
+      charts.main.setActiveElements([
+        { datasetIndex: 0, index: idx },
+        { datasetIndex: 1, index: idx }
+      ]);
+      charts.main.update("none");
+
+      clearTimeout(lpTimer);
+      lpTimer = setTimeout(() => {
+        canvas._longPressConsumed = true;
+        if (navigator.vibrate) navigator.vibrate(18);
+        const dayNum = lbl.replace("D", "");
+        selectVisualDay(dayNum);
+      }, 480);
+    }, { passive: true });
+
+    const cancelLp = () => { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } };
+    canvas.addEventListener("touchmove", e => {
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      if (Math.abs(t.clientX - startX) > 10 || Math.abs(t.clientY - startY) > 10) cancelLp();
+    }, { passive: true });
+    canvas.addEventListener("touchend", cancelLp, { passive: true });
+    canvas.addEventListener("touchcancel", cancelLp, { passive: true });
+  }
+
+  if (labels.length > 0) {
+    updateMainInspectBanner(labels.length - 1);
+  }
 }
 
 const METHOD_COLOR_MAP = {
@@ -4056,25 +4791,58 @@ function initDonutChart(m) {
   const statsMap = {};
   m.current.forEach(x => {
     const k = x["Payment Method"] || "Otros";
-    if (!statsMap[k]) statsMap[k] = { ops: 0, gain: 0 };
+    if (!statsMap[k]) statsMap[k] = { ops: 0, gain: 0, addOps: 0, retOps: 0 };
     statsMap[k].ops += 1;
     statsMap[k].gain += x.Ganancia_Total_USDC;
+    if (x.Type === "Agregar") statsMap[k].addOps += 1;
+    else statsMap[k].retOps += 1;
   });
 
-  const sortedEntries = Object.entries(statsMap).sort((a, b) => b[1].ops - a[1].ops || b[1].gain - a[1].gain);
+  const isGainMode = donutChartMetric === "GAIN";
+  const sortedEntries = Object.entries(statsMap).sort((a, b) =>
+    isGainMode ? (b[1].gain - a[1].gain || b[1].ops - a[1].ops) : (b[1].ops - a[1].ops || b[1].gain - a[1].gain)
+  );
   const labels = sortedEntries.map(e => e[0]);
-  const data = sortedEntries.map(e => e[1].ops);
-  const gains = sortedEntries.map(e => e[1].gain);
-  const totalOps = data.reduce((s, v) => s + v, 0) || 1;
-  const totalGain = gains.reduce((s, v) => s + v, 0);
+  const opsArr = sortedEntries.map(e => e[1].ops);
+  const gainsArr = sortedEntries.map(e => +e[1].gain.toFixed(2));
+  const data = isGainMode ? gainsArr : opsArr;
+
+  const totalOps = opsArr.reduce((s, v) => s + v, 0) || 1;
+  const totalGain = gainsArr.reduce((s, v) => s + v, 0);
+  const totalMetric = isGainMode ? (totalGain || 1) : totalOps;
+
   const colors = labels.map((lbl, idx) => METHOD_COLOR_MAP[lbl] || FALLBACK_PALETTE[idx % FALLBACK_PALETTE.length]);
   const isDark = currentTheme === "dark";
 
   const centerOpsEl = $("#donutCenterOps");
+  const centerLblEl = $("#donutCenterLbl") || canvas.parentElement?.querySelector(".exec-donut-center-lbl");
   const centerGainEl = $("#donutCenterGain");
-  const resetCenter = () => {
-    if (centerOpsEl) centerOpsEl.textContent = `${m.current.length}`;
-    if (centerGainEl) centerGainEl.textContent = `+$${totalGain.toFixed(2)}`;
+
+  const setSliceCenter = (idx) => {
+    const legendItems = $$("#donutCustomLegend .exec-legend-item");
+    legendItems.forEach((el, i) => {
+      el.style.borderColor = (i === idx) ? colors[idx] : "var(--glass-border)";
+      el.style.background = (i === idx) ? "var(--surface-hover)" : "var(--surface-sub)";
+    });
+    if (idx === null || idx === undefined || idx < 0 || idx >= labels.length) {
+      if (centerOpsEl) {
+        centerOpsEl.textContent = isGainMode ? `$${totalGain.toFixed(0)}` : `${m.current.length}`;
+        centerOpsEl.style.color = "var(--text)";
+      }
+      if (centerLblEl) centerLblEl.textContent = isGainMode ? "GANANCIA TOTAL" : "OPERACIONES";
+      if (centerGainEl) centerGainEl.textContent = isGainMode ? `${m.current.length} operaciones` : `+$${totalGain.toFixed(2)} USDC`;
+      return;
+    }
+    const sharePct = ((data[idx] / totalMetric) * 100).toFixed(1);
+    const avgPerOp = opsArr[idx] > 0 ? (gainsArr[idx] / opsArr[idx]) : 0;
+    if (centerOpsEl) {
+      centerOpsEl.textContent = isGainMode ? `+$${gainsArr[idx].toFixed(2)}` : `${opsArr[idx]} ops`;
+      centerOpsEl.style.color = colors[idx];
+    }
+    if (centerLblEl) centerLblEl.textContent = `${labels[idx]} (${sharePct}%)`;
+    if (centerGainEl) centerGainEl.textContent = isGainMode
+      ? `${opsArr[idx]} ops · $${avgPerOp.toFixed(2)}/op`
+      : `+$${gainsArr[idx].toFixed(2)} · ($${avgPerOp.toFixed(2)}/op)`;
   };
 
   charts.donut = new Chart(canvas, {
@@ -4088,7 +4856,7 @@ function initDonutChart(m) {
         borderWidth: 2.5,
         borderRadius: 6,
         spacing: 2,
-        hoverOffset: 6
+        hoverOffset: 7
       }]
     },
     options: {
@@ -4097,43 +4865,34 @@ function initDonutChart(m) {
       cutout: "74%",
       plugins: {
         legend: { display: false },
-        tooltip: {
-          backgroundColor: isDark ? "rgba(20,24,35,0.96)" : "rgba(255,255,255,0.96)",
-          titleColor: isDark ? "#ffffff" : "#1d1d1f",
-          bodyColor: isDark ? "#c5c5c9" : "#424245",
-          borderColor: isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)",
-          borderWidth: 1,
-          padding: 10,
-          callbacks: {
-            label: ctx => {
-              const idx = ctx.dataIndex;
-              const opsVal = data[idx];
-              const pctVal = ((opsVal / totalOps) * 100).toFixed(1);
-              const gVal = gains[idx].toFixed(2);
-              return ` ${opsVal} ops (${pctVal}%) · +$${gVal} USDC`;
-            }
-          }
+        tooltip: { enabled: false }
+      },
+      onClick: (evt, activeEls) => {
+        if (activeEls && activeEls.length) {
+          const idx = activeEls[0].index;
+          setSliceCenter(idx);
+          filterTableByMethodFromDonut(labels[idx]);
+        } else {
+          setSliceCenter(null);
         }
       },
       onHover: (evt, activeEls) => {
-        if (activeEls && activeEls.length > 0) {
-          const idx = activeEls[0].index;
-          if (centerOpsEl) centerOpsEl.textContent = `${data[idx]} ops`;
-          if (centerGainEl) centerGainEl.textContent = `${labels[idx]} · +$${gains[idx].toFixed(2)}`;
-        } else {
-          resetCenter();
-        }
+        setSliceCenter(activeEls && activeEls.length ? activeEls[0].index : null);
       }
     }
   });
 
+  canvas._setSliceCenter = setSliceCenter;
+
   const legendBox = $("#donutCustomLegend");
   if (legendBox) {
     legendBox.innerHTML = sortedEntries.map(([name, st], idx) => {
-      const pct = ((st.ops / totalOps) * 100).toFixed(1);
+      const valMetric = isGainMode ? st.gain : st.ops;
+      const pct = ((valMetric / totalMetric) * 100).toFixed(1);
+      const avgOp = st.ops > 0 ? (st.gain / st.ops) : 0;
       const col = colors[idx];
       return `
-        <div class="exec-legend-item" onmouseenter="highlightDonutSlice(${idx})" onmouseleave="clearDonutSlice()">
+        <div class="exec-legend-item" onclick="highlightDonutSlice(${idx}, '${name.replace(/'/g, "\'")}')" onmouseenter="highlightDonutSlice(${idx})" onmouseleave="clearDonutSlice()" title="Haz clic para filtrar ${name} en la tabla">
           <div class="exec-legend-top">
             <div class="exec-legend-name">
               <span class="exec-legend-dot" style="background:${col};box-shadow:0 0 8px ${col}66"></span>
@@ -4145,39 +4904,82 @@ function initDonutChart(m) {
             <div class="exec-legend-bar-fill" style="width:${pct}%;background:${col}"></div>
           </div>
           <div class="exec-legend-meta">
-            <span>${st.ops} ${st.ops === 1 ? 'operación' : 'operaciones'}</span>
+            <span><b>${st.ops}</b> ${st.ops === 1 ? 'op' : 'ops'} · Media: <b>$${avgOp.toFixed(2)}/op</b></span>
             <b>${pct}%</b>
+          </div>
+          <div class="exec-legend-subrow">
+            <span>↓ Agr: <b>${st.addOps}</b> · ↑ Ret: <b>${st.retOps}</b></span>
+            <span>≈ €${(st.gain * m.rate.eur).toFixed(2)}</span>
           </div>
         </div>
       `;
     }).join("");
   }
+
+  // Pie de resumen ejecutivo inferior para nivelar la tarjeta con Actividad Reciente
+  const footerEl = $("#donutSummaryFooter");
+  if (footerEl && sortedEntries.length > 0) {
+    const topByOps = [...sortedEntries].sort((a,b) => b[1].ops - a[1].ops)[0];
+    const topByGain = [...sortedEntries].sort((a,b) => b[1].gain - a[1].gain)[0];
+    const bestAvgEntry = [...sortedEntries]
+      .filter(e => e[1].ops >= 1)
+      .sort((a,b) => (b[1].gain / b[1].ops) - (a[1].gain / a[1].ops))[0];
+    const bestAvgVal = bestAvgEntry ? (bestAvgEntry[1].gain / bestAvgEntry[1].ops) : 0;
+
+    footerEl.innerHTML = `
+      <div class="donut-summary-pill">
+        <div class="dsp-lbl">🏆 LÍDER EN VOLUMEN</div>
+        <div class="dsp-val" style="color:var(--blue)">${topByOps[0]}</div>
+        <div class="dsp-sub">${topByOps[1].ops} ops (${((topByOps[1].ops / totalOps)*100).toFixed(0)}% del total)</div>
+      </div>
+      <div class="donut-summary-pill">
+        <div class="dsp-lbl">💎 MÁS RENTABLE / OP</div>
+        <div class="dsp-val" style="color:var(--green)">$${bestAvgVal.toFixed(2)} / op</div>
+        <div class="dsp-sub">${bestAvgEntry ? bestAvgEntry[0] : '—'}</div>
+      </div>
+      <div class="donut-summary-pill">
+        <div class="dsp-lbl">⚡ DIVERSIFICACIÓN</div>
+        <div class="dsp-val" style="color:var(--purple)">${sortedEntries.length} ${sortedEntries.length === 1 ? 'método' : 'métodos'}</div>
+        <div class="dsp-sub">Mayor fuente: +$${topByGain[1].gain.toFixed(2)}</div>
+      </div>
+    `;
+  }
 }
 
-window.highlightDonutSlice = function(idx) {
+window.switchDonutMetric = function(metric) {
+  donutChartMetric = metric;
+  const m = computeMetrics(processedOps);
+  renderGeneralView(m);
+};
+
+window.filterTableByMethodFromDonut = function(methodName) {
+  const input = $("#consolidatedSearchInput");
+  if (!input) return;
+  if (input.value.trim().toLowerCase() === methodName.toLowerCase()) {
+    input.value = "";
+    toast("📋 Mostrando todos los métodos en la tabla");
+  } else {
+    input.value = methodName;
+    toast(`🔍 Tabla filtrada por: ${methodName} (toca otra vez para quitar filtro)`);
+  }
+  filterConsolidatedTable();
+};
+
+window.highlightDonutSlice = function(idx, methodName = null) {
   if (!charts.donut) return;
   charts.donut.setActiveElements([{ datasetIndex: 0, index: idx }]);
   charts.donut.update("none");
-  const meta = charts.donut.data;
-  const centerOpsEl = $("#donutCenterOps");
-  const centerGainEl = $("#donutCenterGain");
-  if (centerOpsEl && meta.datasets[0].data[idx] !== undefined) {
-    centerOpsEl.textContent = `${meta.datasets[0].data[idx]} ops`;
-  }
-  if (centerGainEl && meta.labels[idx]) {
-    centerGainEl.textContent = meta.labels[idx];
-  }
+  const canvas = $("#donutChartCanvas");
+  if (canvas && canvas._setSliceCenter) canvas._setSliceCenter(idx);
+  if (methodName) filterTableByMethodFromDonut(methodName);
 };
 
 window.clearDonutSlice = function() {
   if (!charts.donut) return;
   charts.donut.setActiveElements([]);
   charts.donut.update("none");
-  const m = computeMetrics(processedOps);
-  const centerOpsEl = $("#donutCenterOps");
-  const centerGainEl = $("#donutCenterGain");
-  if (centerOpsEl) centerOpsEl.textContent = `${m.ops}`;
-  if (centerGainEl) centerGainEl.textContent = `+$${m.totalCommUSDC.toFixed(2)}`;
+  const canvas = $("#donutChartCanvas");
+  if (canvas && canvas._setSliceCenter) canvas._setSliceCenter(null);
 };
 
 window.switchMainCurrency = c => {
@@ -4303,37 +5105,45 @@ function initEuroDualChart(m) {
   if (charts.euroDual) charts.euroDual.destroy();
 
   const grouped = {};
+  // Ordenamos cronológicamente de más antiguo a más reciente para que el eje X vaya de D1 a D14 (y no al revés)
+  const chronoEur = [...m.eur].sort((a, b) => a._created - b._created);
+
   if (currentGranularity === "Anual") {
     for (let i = 1; i <= 12; i++) {
-      grouped[MESES_CORTOS[i]] = { ret: 0, add: 0 };
+      grouped[MESES_CORTOS[i]] = { ret: 0, add: 0, ops: 0 };
     }
-    m.eur.forEach(x => {
+    chronoEur.forEach(x => {
       const k = MESES_CORTOS[x.Mes_Num];
       if (grouped[k]) {
+        grouped[k].ops += 1;
         if (x.Type === "Retirar") grouped[k].ret += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
         else grouped[k].add += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
       }
     });
   } else if (currentGranularity === "Trimestral" || currentGranularity === "Histórico") {
-    m.eur.forEach(x => {
+    chronoEur.forEach(x => {
       const k = x.Mes_Eje || x.Periodo_Key;
-      if (!grouped[k]) grouped[k] = { ret: 0, add: 0 };
+      if (!grouped[k]) grouped[k] = { ret: 0, add: 0, ops: 0 };
+      grouped[k].ops += 1;
       if (x.Type === "Retirar") grouped[k].ret += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
       else grouped[k].add += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
     });
   } else if (currentGranularity === "Mensual" && $("#day")?.value && $("#day").value !== "Todos") {
-    [...m.eur].sort((a, b) => a._created - b._created).forEach((x, idx) => {
-      const hh = String(x._created.getUTCHours()).padStart(2, "0");
-      const mm = String(x._created.getUTCMinutes()).padStart(2, "0");
+    chronoEur.forEach((x, idx) => {
+      const cOp = getDateComponentsInTz(x._created, timezoneMode);
+      const hh = String(cOp.hour).padStart(2, "0");
+      const mm = String(cOp.minute).padStart(2, "0");
       const key = `${hh}:${mm} (#${idx + 1})`;
-      if (!grouped[key]) grouped[key] = { ret: 0, add: 0 };
+      if (!grouped[key]) grouped[key] = { ret: 0, add: 0, ops: 0 };
+      grouped[key].ops += 1;
       if (x.Type === "Retirar") grouped[key].ret += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
       else grouped[key].add += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
     });
   } else {
-    m.eur.forEach(x => {
+    chronoEur.forEach(x => {
       const key = euroChartTimeframe === "Diario" ? `D${x.Dia}` : `Sem ${Math.ceil(x.Dia / 7)}`;
-      if (!grouped[key]) grouped[key] = { ret: 0, add: 0 };
+      if (!grouped[key]) grouped[key] = { ret: 0, add: 0, ops: 0 };
+      grouped[key].ops += 1;
       if (x.Type === "Retirar") grouped[key].ret += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
       else grouped[key].add += x.Ganancia_Total_USDC * (euroChartCurrency === "EUR" ? m.rate.eur : 1);
     });
@@ -4355,12 +5165,34 @@ function initEuroDualChart(m) {
 
   const chartInner = $("#euroChartInner");
   if (chartInner) {
-    if (isMobile && labels.length > 8) {
-      chartInner.style.width = Math.max(window.innerWidth - 32, labels.length * 48) + "px";
+    if (isMobile && labels.length > 7) {
+      chartInner.style.width = Math.max(window.innerWidth - 32, labels.length * 52) + "px";
     } else {
       chartInner.style.width = "100%";
     }
   }
+
+  const updateEuroInspect = (idx) => {
+    const badge = $("#euroTouchInspectBadge");
+    if (!badge || idx === null || idx === undefined || idx < 0 || idx >= labels.length) return;
+    const dLabel = labels[idx];
+    const rVal = retData[idx]?.toFixed(2) ?? "0.00";
+    const aVal = addData[idx]?.toFixed(2) ?? "0.00";
+    const tVal = lineData[idx]?.toFixed(2) ?? "0.00";
+    const isDayBar = currentGranularity === "Mensual" && /^D\d+$/.test(dLabel);
+    const dayNum = isDayBar ? dLabel.replace("D", "") : null;
+    badge.className = "chart-inspect-pill";
+    badge.style.display = "flex";
+    badge.innerHTML = `
+      <div class="chart-inspect-metrics">
+        <span>📅 <b>${isDayBar ? 'Día ' + dayNum : dLabel}</b></span>
+        <span style="color:#0284c7;font-weight:800">Ret: ${sym}${rVal}</span>
+        <span style="color:#a855f7;font-weight:800">Agr: ${sym}${aVal}</span>
+        <span style="color:#ff9500;font-weight:800">Acum: ${sym}${tVal}</span>
+      </div>
+      ${isDayBar ? `<button type="button" class="chart-inspect-open-btn" onclick="selectVisualDay('${dayNum}')">Ver D${dayNum} →</button>` : ''}
+    `;
+  };
 
   const euroDataLabelsPlugin = {
     id: "euroBarDataLabels",
@@ -4369,7 +5201,7 @@ function initEuroDualChart(m) {
       const metaRet = chart.getDatasetMeta(0);
       const metaAdd = chart.getDatasetMeta(1);
       const metaLine = chart.getDatasetMeta(2);
-      const fontSize = isMobile ? 11.5 : 13;
+      const fontSize = isMobile ? 10.5 : 12.5;
 
       ctx.save();
       [metaRet, metaAdd].forEach((meta, dsIndex) => {
@@ -4382,7 +5214,7 @@ function initEuroDualChart(m) {
             ctx.font = `800 ${fontSize}px -apple-system, "SF Pro Text", "SF Mono", Menlo, monospace`;
             const textWidth = ctx.measureText(text).width;
 
-            if (barHeight >= textWidth + 8 && bar.width >= 16) {
+            if (barHeight >= textWidth + 6 && bar.width >= 14) {
               const centerY = bar.y + barHeight / 2;
               ctx.save();
               ctx.translate(bar.x, centerY);
@@ -4395,13 +5227,15 @@ function initEuroDualChart(m) {
               ctx.shadowOffsetY = 1;
               ctx.fillText(text, 0, 0);
               ctx.restore();
-            } else if (barHeight >= 12) {
+            } else if (barHeight >= 6) {
               ctx.textAlign = "center";
               ctx.textBaseline = "bottom";
-              ctx.font = `750 ${isMobile ? 9.5 : 10.5}px -apple-system, "SF Mono", monospace`;
-              ctx.fillStyle = isDark ? "#ffffff" : "#1d1d1f";
-              ctx.shadowColor = "transparent";
-              ctx.fillText(text, bar.x, bar.y - 2);
+              ctx.font = `800 ${isMobile ? 8.5 : 10}px -apple-system, "SF Mono", monospace`;
+              ctx.fillStyle = dsIndex === 0 ? "#0284c7" : "#a855f7";
+              ctx.shadowColor = isDark ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.9)";
+              ctx.shadowBlur = 3;
+              const yOffset = dsIndex === 1 ? 11 : 2;
+              ctx.fillText(text, bar.x, Math.max(12, bar.y - yOffset));
             }
           }
         });
@@ -4431,9 +5265,9 @@ function initEuroDualChart(m) {
           backgroundColor: "#0284c7",
           borderRadius: 999,
           borderSkipped: false,
-          maxBarThickness: isMobile ? 26 : 36,
-          barPercentage: 0.88,
-          categoryPercentage: 0.88,
+          maxBarThickness: isMobile ? 22 : 34,
+          barPercentage: 0.86,
+          categoryPercentage: 0.84,
           yAxisID: "y"
         },
         {
@@ -4442,9 +5276,9 @@ function initEuroDualChart(m) {
           backgroundColor: "#a855f7",
           borderRadius: 999,
           borderSkipped: false,
-          maxBarThickness: isMobile ? 26 : 36,
-          barPercentage: 0.88,
-          categoryPercentage: 0.88,
+          maxBarThickness: isMobile ? 22 : 34,
+          barPercentage: 0.86,
+          categoryPercentage: 0.84,
           yAxisID: "y"
         },
         {
@@ -4452,12 +5286,12 @@ function initEuroDualChart(m) {
           label: `Acumulado (${sym})`,
           data: lineData,
           borderColor: "#ff9500",
-          borderWidth: isMobile ? 2.0 : 3.4,
+          borderWidth: isMobile ? 2.2 : 3.4,
           pointBackgroundColor: "#ffffff",
           pointBorderColor: "#ff9500",
-          pointBorderWidth: isMobile ? 1.0 : 3.2,
-          pointRadius: isMobile ? 2.0 : 6.5,
-          pointHoverRadius: isMobile ? 4.5 : 8.5,
+          pointBorderWidth: isMobile ? 1.5 : 3.2,
+          pointRadius: isMobile ? 2.5 : 6.0,
+          pointHoverRadius: isMobile ? 5.0 : 8.0,
           tension: 0.28,
           yAxisID: "y1"
         }
@@ -4479,32 +5313,45 @@ function initEuroDualChart(m) {
         y: {
           grid: { color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.06)" },
           ticks: { color: isDark ? "#86868b" : "#6e6e73", font: { size: isMobile ? 9 : 11, family: "SF Mono, monospace" } },
-          grace: "20%"
+          grace: "22%"
         },
         y1: {
           position: "right",
           grid: { display: false },
           ticks: { color: "#ff9500", font: { weight: "750", size: isMobile ? 9 : 11, family: "SF Mono, monospace" } },
-          grace: "20%"
+          grace: "22%"
         }
       },
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: !isMobile }
+      },
+      onClick: (evt, activeElements) => {
+        if (!activeElements || !activeElements.length) return;
+        const idx = activeElements[0].index;
+        updateEuroInspect(idx);
+        const lbl = labels[idx] || "";
+        const now = performance.now();
+        if (currentGranularity === "Mensual" && /^D\d+$/.test(lbl)) {
+          if (canvas._lastTapIdx === idx && (now - (canvas._lastTapTime || 0)) < 380) {
+            canvas._lastTapIdx = null;
+            selectVisualDay(lbl.replace("D", ""));
+          } else {
+            canvas._lastTapIdx = idx;
+            canvas._lastTapTime = now;
+          }
+        }
+      },
       onHover: (evt, activeElements) => {
-        const badge = $("#euroTouchInspectBadge");
-        if (!badge) return;
         if (activeElements && activeElements.length > 0) {
-          const idx = activeElements[0].index;
-          const dLabel = labels[idx];
-          const rVal = retData[idx];
-          const aVal = addData[idx];
-          const tVal = lineData[idx];
-          badge.style.display = "block";
-          badge.innerHTML = `<span>📅 ${dLabel}:</span> <span style="color:#0284c7">Ret ${sym}${rVal}</span> · <span style="color:#a855f7">Agr ${sym}${aVal}</span> · <span style="color:#ff9500">Acum ${sym}${tVal}</span>`;
+          updateEuroInspect(activeElements[0].index);
         }
       }
     },
     plugins: [euroDataLabelsPlugin]
   });
+
+  if (labels.length > 0) updateEuroInspect(labels.length - 1);
 }
 
 window.switchEuroCurrency = c => { euroChartCurrency = c; renderEuroView(computeMetrics(processedOps)); };
@@ -4624,37 +5471,45 @@ function initSolesDualChart(m) {
   if (charts.solesDual) charts.solesDual.destroy();
 
   const grouped = {};
+  // Ordenamos cronológicamente de más antiguo a más reciente para que el eje X vaya de D2 -> D14 (y no al revés)
+  const chronoPen = [...m.pen].sort((a, b) => a._created - b._created);
+
   if (currentGranularity === "Anual") {
     for (let i = 1; i <= 12; i++) {
-      grouped[MESES_CORTOS[i]] = { ret: 0, add: 0 };
+      grouped[MESES_CORTOS[i]] = { ret: 0, add: 0, ops: 0 };
     }
-    m.pen.forEach(x => {
+    chronoPen.forEach(x => {
       const k = MESES_CORTOS[x.Mes_Num];
       if (grouped[k]) {
+        grouped[k].ops += 1;
         if (x.Type === "Retirar") grouped[k].ret += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
         else grouped[k].add += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
       }
     });
   } else if (currentGranularity === "Trimestral" || currentGranularity === "Histórico") {
-    m.pen.forEach(x => {
+    chronoPen.forEach(x => {
       const k = x.Mes_Eje || x.Periodo_Key;
-      if (!grouped[k]) grouped[k] = { ret: 0, add: 0 };
+      if (!grouped[k]) grouped[k] = { ret: 0, add: 0, ops: 0 };
+      grouped[k].ops += 1;
       if (x.Type === "Retirar") grouped[k].ret += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
       else grouped[k].add += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
     });
   } else if (currentGranularity === "Mensual" && $("#day")?.value && $("#day").value !== "Todos") {
-    [...m.pen].sort((a, b) => a._created - b._created).forEach((x, idx) => {
-      const hh = String(x._created.getUTCHours()).padStart(2, "0");
-      const mm = String(x._created.getUTCMinutes()).padStart(2, "0");
+    chronoPen.forEach((x, idx) => {
+      const cOp = getDateComponentsInTz(x._created, timezoneMode);
+      const hh = String(cOp.hour).padStart(2, "0");
+      const mm = String(cOp.minute).padStart(2, "0");
       const key = `${hh}:${mm} (#${idx + 1})`;
-      if (!grouped[key]) grouped[key] = { ret: 0, add: 0 };
+      if (!grouped[key]) grouped[key] = { ret: 0, add: 0, ops: 0 };
+      grouped[key].ops += 1;
       if (x.Type === "Retirar") grouped[key].ret += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
       else grouped[key].add += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
     });
   } else {
-    m.pen.forEach(x => {
+    chronoPen.forEach(x => {
       const key = solesChartTimeframe === "Diario" ? `D${x.Dia}` : `Sem ${Math.ceil(x.Dia / 7)}`;
-      if (!grouped[key]) grouped[key] = { ret: 0, add: 0 };
+      if (!grouped[key]) grouped[key] = { ret: 0, add: 0, ops: 0 };
+      grouped[key].ops += 1;
       if (x.Type === "Retirar") grouped[key].ret += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
       else grouped[key].add += x.Ganancia_Total_USDC * (solesChartCurrency === "PEN" ? m.rate.pen : 1);
     });
@@ -4676,12 +5531,34 @@ function initSolesDualChart(m) {
 
   const chartInner = $("#solesChartInner");
   if (chartInner) {
-    if (isMobile && labels.length > 8) {
-      chartInner.style.width = Math.max(window.innerWidth - 32, labels.length * 48) + "px";
+    if (isMobile && labels.length > 7) {
+      chartInner.style.width = Math.max(window.innerWidth - 32, labels.length * 52) + "px";
     } else {
       chartInner.style.width = "100%";
     }
   }
+
+  const updateSolesInspect = (idx) => {
+    const badge = $("#solesTouchInspectBadge");
+    if (!badge || idx === null || idx === undefined || idx < 0 || idx >= labels.length) return;
+    const dLabel = labels[idx];
+    const rVal = retData[idx]?.toFixed(2) ?? "0.00";
+    const aVal = addData[idx]?.toFixed(2) ?? "0.00";
+    const tVal = lineData[idx]?.toFixed(2) ?? "0.00";
+    const isDayBar = currentGranularity === "Mensual" && /^D\d+$/.test(dLabel);
+    const dayNum = isDayBar ? dLabel.replace("D", "") : null;
+    badge.className = "chart-inspect-pill";
+    badge.style.display = "flex";
+    badge.innerHTML = `
+      <div class="chart-inspect-metrics">
+        <span>📅 <b>${isDayBar ? 'Día ' + dayNum : dLabel}</b></span>
+        <span style="color:#f59e0b;font-weight:800">Ret: ${sym}${rVal}</span>
+        <span style="color:#8b5cf6;font-weight:800">Agr: ${sym}${aVal}</span>
+        <span style="color:#00c7be;font-weight:800">Acum: ${sym}${tVal}</span>
+      </div>
+      ${isDayBar ? `<button type="button" class="chart-inspect-open-btn" onclick="selectVisualDay('${dayNum}')">Ver D${dayNum} →</button>` : ''}
+    `;
+  };
 
   const solesDataLabelsPlugin = {
     id: "solesBarDataLabels",
@@ -4690,7 +5567,7 @@ function initSolesDualChart(m) {
       const metaRet = chart.getDatasetMeta(0);
       const metaAdd = chart.getDatasetMeta(1);
       const metaLine = chart.getDatasetMeta(2);
-      const fontSize = isMobile ? 11.5 : 13;
+      const fontSize = isMobile ? 10.5 : 12.5;
 
       ctx.save();
       [metaRet, metaAdd].forEach((meta, dsIndex) => {
@@ -4703,7 +5580,7 @@ function initSolesDualChart(m) {
             ctx.font = `800 ${fontSize}px -apple-system, "SF Pro Text", "SF Mono", Menlo, monospace`;
             const textWidth = ctx.measureText(text).width;
 
-            if (barHeight >= textWidth + 8 && bar.width >= 16) {
+            if (barHeight >= textWidth + 6 && bar.width >= 14) {
               const centerY = bar.y + barHeight / 2;
               ctx.save();
               ctx.translate(bar.x, centerY);
@@ -4716,13 +5593,15 @@ function initSolesDualChart(m) {
               ctx.shadowOffsetY = 1;
               ctx.fillText(text, 0, 0);
               ctx.restore();
-            } else if (barHeight >= 12) {
+            } else if (barHeight >= 6) {
               ctx.textAlign = "center";
               ctx.textBaseline = "bottom";
-              ctx.font = `750 ${isMobile ? 9.5 : 10.5}px -apple-system, "SF Mono", monospace`;
-              ctx.fillStyle = isDark ? "#ffffff" : "#1d1d1f";
-              ctx.shadowColor = "transparent";
-              ctx.fillText(text, bar.x, bar.y - 2);
+              ctx.font = `800 ${isMobile ? 8.5 : 10}px -apple-system, "SF Mono", monospace`;
+              ctx.fillStyle = dsIndex === 0 ? "#f59e0b" : "#8b5cf6";
+              ctx.shadowColor = isDark ? "rgba(0,0,0,0.75)" : "rgba(255,255,255,0.9)";
+              ctx.shadowBlur = 3;
+              const yOffset = dsIndex === 1 ? 11 : 2;
+              ctx.fillText(text, bar.x, Math.max(12, bar.y - yOffset));
             }
           }
         });
@@ -4752,9 +5631,9 @@ function initSolesDualChart(m) {
           backgroundColor: "#f59e0b",
           borderRadius: 999,
           borderSkipped: false,
-          maxBarThickness: isMobile ? 26 : 36,
-          barPercentage: 0.88,
-          categoryPercentage: 0.88,
+          maxBarThickness: isMobile ? 22 : 34,
+          barPercentage: 0.86,
+          categoryPercentage: 0.84,
           yAxisID: "y"
         },
         {
@@ -4763,9 +5642,9 @@ function initSolesDualChart(m) {
           backgroundColor: "#8b5cf6",
           borderRadius: 999,
           borderSkipped: false,
-          maxBarThickness: isMobile ? 26 : 36,
-          barPercentage: 0.88,
-          categoryPercentage: 0.88,
+          maxBarThickness: isMobile ? 22 : 34,
+          barPercentage: 0.86,
+          categoryPercentage: 0.84,
           yAxisID: "y"
         },
         {
@@ -4773,12 +5652,12 @@ function initSolesDualChart(m) {
           label: `Acumulado (${sym})`,
           data: lineData,
           borderColor: "#00c7be",
-          borderWidth: isMobile ? 2.0 : 3.4,
+          borderWidth: isMobile ? 2.2 : 3.4,
           pointBackgroundColor: "#ffffff",
           pointBorderColor: "#00c7be",
-          pointBorderWidth: isMobile ? 1.0 : 3.2,
-          pointRadius: isMobile ? 2.0 : 6.5,
-          pointHoverRadius: isMobile ? 4.5 : 8.5,
+          pointBorderWidth: isMobile ? 1.5 : 3.2,
+          pointRadius: isMobile ? 2.5 : 6.0,
+          pointHoverRadius: isMobile ? 5.0 : 8.0,
           tension: 0.28,
           yAxisID: "y1"
         }
@@ -4800,32 +5679,45 @@ function initSolesDualChart(m) {
         y: {
           grid: { color: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.06)" },
           ticks: { color: isDark ? "#86868b" : "#6e6e73", font: { size: isMobile ? 9 : 11, family: "SF Mono, monospace" } },
-          grace: "20%"
+          grace: "22%"
         },
         y1: {
           position: "right",
           grid: { display: false },
           ticks: { color: "#00c7be", font: { weight: "750", size: isMobile ? 9 : 11, family: "SF Mono, monospace" } },
-          grace: "20%"
+          grace: "22%"
         }
       },
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: !isMobile }
+      },
+      onClick: (evt, activeElements) => {
+        if (!activeElements || !activeElements.length) return;
+        const idx = activeElements[0].index;
+        updateSolesInspect(idx);
+        const lbl = labels[idx] || "";
+        const now = performance.now();
+        if (currentGranularity === "Mensual" && /^D\d+$/.test(lbl)) {
+          if (canvas._lastTapIdx === idx && (now - (canvas._lastTapTime || 0)) < 380) {
+            canvas._lastTapIdx = null;
+            selectVisualDay(lbl.replace("D", ""));
+          } else {
+            canvas._lastTapIdx = idx;
+            canvas._lastTapTime = now;
+          }
+        }
+      },
       onHover: (evt, activeElements) => {
-        const badge = $("#solesTouchInspectBadge");
-        if (!badge) return;
         if (activeElements && activeElements.length > 0) {
-          const idx = activeElements[0].index;
-          const dLabel = labels[idx];
-          const rVal = retData[idx];
-          const aVal = addData[idx];
-          const tVal = lineData[idx];
-          badge.style.display = "block";
-          badge.innerHTML = `<span>📅 ${dLabel}:</span> <span style="color:#f59e0b">Ret ${sym}${rVal}</span> · <span style="color:#8b5cf6">Agr ${sym}${aVal}</span> · <span style="color:#00c7be">Acum ${sym}${tVal}</span>`;
+          updateSolesInspect(activeElements[0].index);
         }
       }
     },
     plugins: [solesDataLabelsPlugin]
   });
+
+  if (labels.length > 0) updateSolesInspect(labels.length - 1);
 }
 
 window.switchSolesCurrency = c => { solesChartCurrency = c; renderSolesView(computeMetrics(processedOps)); };
@@ -5174,7 +6066,22 @@ function initTicketCharts(buckets) {
   if (donutCanvas) {
     if (charts.ticketDonut) charts.ticketDonut.destroy();
     const cOpsEl = $("#ticketDonutCenterOps");
+    const cLblEl = donutCanvas.parentElement?.querySelector(".exec-donut-center-lbl");
     const cSubEl = $("#ticketDonutCenterSub");
+
+    const setTicketCenter = (idx) => {
+      if (idx === null || idx === undefined || !items[idx]) {
+        if (cOpsEl) { cOpsEl.textContent = `${items.reduce((s, x) => s + x.ops, 0)}`; cOpsEl.style.color = "var(--text)"; }
+        if (cLblEl) cLblEl.textContent = "OPERACIONES";
+        if (cSubEl) cSubEl.textContent = `+$${totalComm.toFixed(2)}`;
+        return;
+      }
+      const it = items[idx];
+      const pct = ((it.ops / totalOps) * 100).toFixed(1);
+      if (cOpsEl) { cOpsEl.textContent = `${it.ops} ops`; cOpsEl.style.color = it.color; }
+      if (cLblEl) cLblEl.textContent = `${it.short} (${pct}%)`;
+      if (cSubEl) cSubEl.textContent = `+$${it.comm.toFixed(2)} USDC`;
+    };
 
     charts.ticketDonut = new Chart(donutCanvas, {
       type: "doughnut",
@@ -5187,7 +6094,7 @@ function initTicketCharts(buckets) {
           borderWidth: 2.5,
           borderRadius: 6,
           spacing: 2,
-          hoverOffset: 5
+          hoverOffset: 6
         }]
       },
       options: {
@@ -5196,31 +6103,13 @@ function initTicketCharts(buckets) {
         cutout: "74%",
         plugins: {
           legend: { display: false },
-          tooltip: {
-            backgroundColor: isDark ? "rgba(20,24,35,0.96)" : "rgba(255,255,255,0.96)",
-            titleColor: isDark ? "#ffffff" : "#1d1d1f",
-            bodyColor: isDark ? "#c5c5c9" : "#424245",
-            borderColor: isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)",
-            borderWidth: 1,
-            padding: 10,
-            callbacks: {
-              label: ctx => {
-                const it = items[ctx.dataIndex];
-                const pct = ((it.ops / totalOps) * 100).toFixed(1);
-                return ` ${it.ops} ops (${pct}%) · +$${it.comm.toFixed(2)}`;
-              }
-            }
-          }
+          tooltip: { enabled: false }
+        },
+        onClick: (evt, activeEls) => {
+          setTicketCenter(activeEls && activeEls.length ? activeEls[0].index : null);
         },
         onHover: (evt, activeEls) => {
-          if (activeEls && activeEls.length > 0) {
-            const it = items[activeEls[0].index];
-            if (cOpsEl) cOpsEl.textContent = `${it.ops} ops`;
-            if (cSubEl) cSubEl.textContent = `${it.short} · +$${it.comm.toFixed(2)}`;
-          } else {
-            if (cOpsEl) cOpsEl.textContent = `${items.reduce((s, x) => s + x.ops, 0)}`;
-            if (cSubEl) cSubEl.textContent = `+$${totalComm.toFixed(2)}`;
-          }
+          setTicketCenter(activeEls && activeEls.length ? activeEls[0].index : null);
         }
       }
     });
@@ -6110,20 +6999,25 @@ $("#clearDates").onclick = () => {
 window.exportCSVReport = function() {
   const m = computeMetrics(processedOps);
   if (m.empty || !m.current.length) return toast("No hay operaciones para exportar");
-  const headers = ["CREATED AT (UTC)","MONEDA_OP","TYPE","PAYMENT METHOD","FUNDS TO SEND AMOUNT","FUNDS TO RECEIVE AMOUNT","PEER COMMISSION","COMISION_FIJA_USD","GANANCIA_TOTAL_USDC","SERVICE FEE","EXCHANGE RATE"];
-  const rows = m.current.map(r => [
-    `"${formatDisplayDate(r._created, true)}"`,
-    `"${r.Moneda_Op}"`,
-    `"${r.Type}"`,
-    `"${r["Payment Method"]}"`,
-    r["Funds To Send Amount"],
-    r["Funds To Receive Amount"],
-    r["Peer Commission"],
-    r.Comision_Fija_USD,
-    r.Ganancia_Total_USDC,
-    r["Service Fee"],
-    r["Exchange Rate"] || m.rate.eur
-  ]);
+  const headers = [`FECHA Y HORA (${getTzLabel(timezoneMode)})`,"ZONA","OPERACION","METODO DE PAGO","FONDOS ENVIADOS","DIVISA ENVIADA","FONDOS RECIBIDOS","DIVISA RECIBIDA","PEER COMMISSION (USDC)","TARIFA FIJA (USDC)","GANANCIA TOTAL (USDC)","SERVICE FEE","EXCHANGE RATE"];
+  const rows = m.current.map(r => {
+    const { zoneCur, sendCur, recCur } = resolveOpCurrencies(r);
+    return [
+      `"${formatDisplayDate(r._created, true)}"`,
+      `"${zoneCur}"`,
+      `"${r.Type}"`,
+      `"${r["Payment Method"]}"`,
+      r["Funds To Send Amount"],
+      `"${sendCur}"`,
+      r["Funds To Receive Amount"],
+      `"${recCur}"`,
+      r["Peer Commission"],
+      r.Comision_Fija_USD,
+      r.Ganancia_Total_USDC,
+      r["Service Fee"],
+      r["Exchange Rate"] || m.rate.eur
+    ];
+  });
   const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
   const link = document.createElement("a");
   link.setAttribute("href", encodeURI(csvContent));
@@ -6153,40 +7047,41 @@ window.printReport = function() {
     doc.setTextColor(100, 116, 139);
     const pLabel = m.current[0]?.Periodo_Label || $("#period").value || "Periodo Actual";
     doc.text(
-      `Periodo: ${pLabel}  |  Operaciones: ${m.ops}  |  Comisiones USDC: $${m.totalCommUSDC.toFixed(2)}  |  Ganancia Global: €${m.globalEUR.toFixed(2)}  |  TC Ref EUR: ${m.rate.eur.toFixed(3)}`,
+      `Periodo: ${pLabel}  |  Zona Horaria: ${getTzLabel(timezoneMode)}  |  Operaciones: ${m.ops}  |  Comisiones USDC: $${m.totalCommUSDC.toFixed(2)}  |  Ganancia Global: €${m.globalEUR.toFixed(2)}`,
       14,
       22
     );
 
     const headers = [
       [
-        "CREATED AT (UTC)",
-        "MONEDA",
+        `FECHA (${timezoneMode})`,
+        "ZONA",
         "TIPO",
         "MÉTODO DE PAGO",
-        "ENVIADO",
-        "RECIBIDO",
+        "FONDOS ENVIADOS",
+        "FONDOS RECIBIDOS",
         "PEER COMM ($)",
         "FIJA ($)",
         "GANANCIA ($)",
-        "SERVICE FEE",
         "TC RATE"
       ]
     ];
 
-    const rows = m.current.map(r => [
-      formatDisplayDate(r._created, true),
-      r.Moneda_Op,
-      r.Type,
-      r["Payment Method"],
-      num(r["Funds To Send Amount"]).toLocaleString("es-ES", { minimumFractionDigits: 2 }),
-      num(r["Funds To Receive Amount"]).toLocaleString("es-ES", { minimumFractionDigits: 2 }),
-      num(r["Peer Commission"]).toFixed(2),
-      num(r.Comision_Fija_USD).toFixed(2),
-      num(r.Ganancia_Total_USDC).toFixed(2),
-      num(r["Service Fee"]).toFixed(2),
-      num(r["Exchange Rate"] || r.Net_Exchange_Rate || m.rate.eur).toFixed(2)
-    ]);
+    const rows = m.current.map(r => {
+      const { zoneCur, sendCur, recCur } = resolveOpCurrencies(r);
+      return [
+        formatDisplayDate(r._created, true),
+        zoneCur,
+        r.Type,
+        r["Payment Method"],
+        formatAmountWithBadge(r["Funds To Send Amount"], sendCur, false),
+        formatAmountWithBadge(r["Funds To Receive Amount"], recCur, false),
+        `$${num(r["Peer Commission"]).toFixed(2)}`,
+        `$${num(r.Comision_Fija_USD).toFixed(2)}`,
+        `+$${num(r.Ganancia_Total_USDC).toFixed(2)}`,
+        num(r["Exchange Rate"] || r.Net_Exchange_Rate || m.rate.eur).toFixed(3)
+      ];
+    });
 
     doc.autoTable({
       head: headers,
